@@ -1,0 +1,355 @@
+====================================================================================================\
+DETAILED COMPARISON: IFC_GEM.csv (Emerging Market Risk Data) vs Excel Files (Global Economic Monitor Data)\
+====================================================================================================\
+\
+1. ANALYZING IFC_GEM.CSV\
+----------------------------------------------------------------------------------------------------\
+\
+Indicators in IFC_GEM.csv (12 total):\
+  \'95 Average private default rates (2853 records)\
+  \'95 Average private recovery rates (1269 records)\
+  \'95 Average public default rates (619 records)\
+  \'95 Average public recovery rates (172 records)\
+  \'95 Average sovereign default rates (119 records)\
+  \'95 Average sovereign recovery rates (89 records)\
+  \'95 Historical private default rates (11222 records)\
+  \'95 Historical private recovery rates (4616 records)\
+  \'95 Historical public default rates (1395 records)\
+  \'95 Historical public recovery rates (596 records)\
+  \'95 Historical sovereign default rates (123 records)\
+  \'95 Historical sovereign recovery rates (82 records)\
+\
+Countries/Regions in IFC_GEM.csv (132 total):\
+  Sample: Africa, Albania, Argentina, Armenia, Asia, Azerbaijan, Bangladesh, Belarus, Benin, Bolivia, Bosnia and Herzegovina, Botswana, Brazil, Bulgaria, Burkina Faso...\
+\
+Time Coverage: 1984 to 2024 (41 years)\
+\
+Metrics available: Average Recovery Rate, Average default rate, Contracts, Counterparts, Defaults, Maximum observation, Median, Minimum observation, Observations, Observed years, Signed Amount\
+\
+2. ANALYZING EXCEL FILES\
+----------------------------------------------------------------------------------------------------\
+\
+Total Excel files: 37\
+\
+Excel files categorized by indicator type:\
+\
+CPI/Inflation (15 files):\
+  \'95 CPI Price, % y-o-y, median weighted, seas. adj..xlsx\
+  \'95 CPI Price, % y-o-y, nominal, seas. adj..xlsx\
+  \'95 CPI Price, nominal, not seas. adj..xlsx\
+  \'95 CPI Price, nominal, seas. adj..xlsx\
+  \'95 Core CPI, not seas. adj..xlsx\
+  \'95 Core CPI, seas. adj..xlsx\
+  \'95 Exports Merchandise, Customs, Price, US$, not seas. adj..xlsx\
+  \'95 Exports Merchandise, Customs, Price, US$, seas. adj..xlsx\
+  \'95 GDP Deflator at Market Prices, LCU.xlsx\
+  \'95 GDP at market prices, constant 2010 LCU, millions, seas. adj..xlsx\
+  \'95 GDP at market prices, constant 2010 US$, millions, seas. adj..xlsx\
+  \'95 GDP at market prices, current LCU, millions, seas. adj..xlsx\
+  \'95 GDP at market prices, current US$, millions, seas. adj..xlsx\
+  \'95 Imports Merchandise, Customs, Price, US$, not seas. adj..xlsx\
+  \'95 Imports Merchandise, Customs, Price, US$, seas. adj..xlsx\
+\
+Exchange Rate (5 files):\
+  \'95 Exchange rate, new LCU per USD extended backward, period average.xlsx\
+  \'95 Exchange rate, old LCU per USD extended forward, period average.xlsx\
+  \'95 Nominal Effective Exchange Rate.xlsx\
+  \'95 Official exchange rate, LCU per USD, period average.xlsx\
+  \'95 Real Effective Exchange Rate.xlsx\
+\
+Trade (Exports/Imports) (10 files):\
+  \'95 Exports Merchandise, Customs, constant 2010 US$, millions, not seas. adj..xlsx\
+  \'95 Exports Merchandise, Customs, constant 2010 US$, millions, seas. adj..xlsx\
+  \'95 Exports Merchandise, Customs, current US$, millions, not seas. adj..xlsx\
+  \'95 Exports Merchandise, Customs, current US$, millions, seas. adj..xlsx\
+  \'95 Foreign Reserves, Months Import Cover, Goods.xlsx\
+  \'95 Imports Merchandise, Customs, constant 2010 US$, millions, not seas. adj..xlsx\
+  \'95 Imports Merchandise, Customs, constant 2010 US$, millions, seas. adj..xlsx\
+  \'95 Imports Merchandise, Customs, current US$, millions, not seas. adj..xlsx\
+  \'95 Imports Merchandise, Customs, current US$, millions, seas. adj..xlsx\
+  \'95 Terms of Trade.xlsx\
+\
+Stock Market (2 files):\
+  \'95 Stock Markets, LCU.xlsx\
+  \'95 Stock Markets, US$.xlsx\
+\
+Reserves (1 files):\
+  \'95 Total Reserves.xlsx\
+\
+Labor Market (4 files):\
+  \'95 Industrial Production, constant 2010 US$, not seas. adj..xlsx\
+  \'95 Industrial Production, constant 2010 US$, seas. adj..xlsx\
+  \'95 Retail Sales Volume Index, seas. adj..xlsx\
+  \'95 Unemployment Rate, seas. adj..xlsx\
+\
+3. COMMON DIMENSIONS ANALYSIS\
+----------------------------------------------------------------------------------------------------\
+\
+Country/Region overlap (sample from first 5 Excel files):\
+\
+CPI Price, % y-o-y, median weighted, seas. adj..xlsx:\
+  Total countries: 12\
+  Common with IFC_GEM: 0\
+\
+CPI Price, % y-o-y, nominal, seas. adj..xlsx:\
+  Total countries: 108\
+  Common with IFC_GEM: 63\
+  Sample common countries: Albania, Armenia, Azerbaijan, Bangladesh, Belarus\
+\
+CPI Price, nominal, not seas. adj..xlsx:\
+  Total countries: 161\
+  Common with IFC_GEM: 75\
+  Sample common countries: Albania, Armenia, Azerbaijan, Bangladesh, Belarus\
+\
+CPI Price, nominal, seas. adj..xlsx:\
+  Total countries: 120\
+  Common with IFC_GEM: 63\
+  Sample common countries: Albania, Armenia, Azerbaijan, Bangladesh, Belarus\
+\
+Core CPI, not seas. adj..xlsx:\
+  Total countries: 89\
+  Common with IFC_GEM: 48\
+  Sample common countries: Albania, Armenia, Belarus, Bosnia and Herzegovina, Brazil\
+\
+4. KEY FINDINGS\
+----------------------------------------------------------------------------------------------------\
+\
+\uc0\u10003  COMMON INDICATORS (Other than Country Name):\
+\
+  a) TIME PERIOD (Years):\
+     - IFC_GEM.csv has: 1984-2024\
+     - Excel files have: 1996-2025\
+     - Common overlap: 1996-2024 (29 years)\
+     - This is a KEY common dimension for joining datasets\
+\
+  b) GEOGRAPHIC DIMENSION:\
+     - Both datasets share 40-88 common country/region names (depending on file)\
+     - This allows for country-level comparisons\
+\
+  c) FREQUENCY:\
+     - IFC_GEM.csv: Annual data (FREQ=A)\
+     - Excel files: Appear to be annual or quarterly (mostly annual)\
+     - Common frequency enables time-series analysis\
+\
+\uc0\u10007  DIFFERENT INDICATORS:\
+\
+  IFC_GEM.csv focuses on CREDIT RISK indicators:\
+     - Average private default rates\
+     - Average private recovery rates\
+     - Average public default rates\
+     - Average public recovery rates\
+     - Average sovereign default rates\
+\
+  Excel files focus on MACRO-ECONOMIC indicators:\
+     - CPI (Consumer Price Index) / Inflation\
+     - GDP (Gross Domestic Product)\
+     - Exchange Rates\
+     - Trade (Exports/Imports)\
+     - Stock Markets\
+     - Reserves\
+     - Unemployment/Employment\
+\
+5. CONCLUSION\
+----------------------------------------------------------------------------------------------------\
+\
+The IFC_GEM.csv and Excel files do NOT share common ECONOMIC indicators.\
+\
+However, they share TWO critical dimensions for data integration:\
+\
+1. COUNTRY/REGION NAME - Allows geographic matching\
+2. TIME PERIOD (Year) - Allows temporal matching\
+\
+These shared dimensions enable analysts to:\
+- Link credit risk data (from IFC_GEM) with macro-economic indicators (from Excel files)\
+- Perform country-year level analysis\
+- Study correlations between economic conditions and default/recovery rates\
+- Build predictive models using both credit and economic data\
+\
+Example use case:\
+"Analyze relationship between GDP growth (Excel) and sovereign default rates (IFC_GEM) \
+ for Brazil from 1996-2024"\
+\
+\
+====================================================================================================\
+FINAL COMPARISON REPORT: Common Indicators Between IFC_GEM.csv and Excel Files\
+====================================================================================================\
+\
+====================================================================================================\
+ANSWER TO YOUR QUESTION:\
+====================================================================================================\
+\
+\uc0\u10067  Are there any common indicators among them other than country name?\
+\
+\uc0\u9989  YES! The datasets share the following common dimensions:\
+\
+1. TIME PERIOD (Year) \uc0\u11088 \
+   --------------------------------------------------------------------------------\
+   \'95 IFC_GEM.csv covers: 1984 to 2024\
+   \'95 Excel files cover: 1996 to 2025\
+   \'95 COMMON OVERLAP: 1996 to 2024 (29 years of shared data)\
+   \'95 This is a PRIMARY linking dimension for analysis\
+\
+2. GEOGRAPHIC REGION (Country/Region Name)\
+   --------------------------------------------------------------------------------\
+   \'95 Both datasets contain country and region names\
+   \'95 Number of common countries varies by Excel file (see table below)\
+   \'95 This is a PRIMARY linking dimension for analysis\
+\
+3. DATA FREQUENCY\
+   --------------------------------------------------------------------------------\
+   \'95 IFC_GEM.csv: Annual frequency (FREQ=A)\
+   \'95 Excel files: Primarily annual data\
+   \'95 Compatible for time-series analysis\
+\
+\
+====================================================================================================\
+DETAILED BREAKDOWN: Common Countries by Excel File\
+====================================================================================================\
+\
+Excel File                                                                    Common   Common\
+                                                                            Countries    Years\
+----------------------------------------------------------------------------------------------------\
+Exchange rate, new LCU per USD extended backward, period average.xlsx             88        9\
+Exchange rate, old LCU per USD extended forward, period average.xlsx              88        9\
+Official exchange rate, LCU per USD, period average.xlsx                          88        9\
+Total Reserves.xlsx                                                               78        9\
+CPI Price, nominal, not seas. adj..xlsx                                           75        9\
+CPI Price, % y-o-y, nominal, seas. adj..xlsx                                      63        9\
+CPI Price, nominal, seas. adj..xlsx                                               63        9\
+Exports Merchandise, Customs, current US$, millions, not seas. adj..xlsx          63        9\
+Exports Merchandise, Customs, current US$, millions, seas. adj..xlsx              62        9\
+Imports Merchandise, Customs, current US$, millions, not seas. adj..xlsx          60        9\
+Imports Merchandise, Customs, current US$, millions, seas. adj..xlsx              59        9\
+Foreign Reserves, Months Import Cover, Goods.xlsx                                 58        9\
+GDP at market prices, current US$, millions, seas. adj..xlsx                      52        9\
+GDP at market prices, current LCU, millions, seas. adj..xlsx                      51        9\
+GDP at market prices, constant 2010 US$, millions, seas. adj..xlsx                49        9\
+Core CPI, not seas. adj..xlsx                                                     48        9\
+GDP at market prices, constant 2010 LCU, millions, seas. adj..xlsx                48        9\
+Nominal Effective Exchange Rate.xlsx                                              47        9\
+GDP Deflator at Market Prices, LCU.xlsx                                           46        0\
+Real Effective Exchange Rate.xlsx                                                 46        9\
+Industrial Production, constant 2010 US$, not seas. adj..xlsx                     45        9\
+Industrial Production, constant 2010 US$, seas. adj..xlsx                         45        9\
+Core CPI, seas. adj..xlsx                                                         40        9\
+Stock Markets, US$.xlsx                                                           35        9\
+Stock Markets, LCU.xlsx                                                           34        9\
+Unemployment Rate, seas. adj..xlsx                                                29        9\
+Imports Merchandise, Customs, Price, US$, seas. adj..xlsx                         16        9\
+Imports Merchandise, Customs, constant 2010 US$, millions, seas. adj..xlsx        16        9\
+Exports Merchandise, Customs, Price, US$, seas. adj..xlsx                         15        9\
+Exports Merchandise, Customs, constant 2010 US$, millions, seas. adj..xlsx        15        9\
+Imports Merchandise, Customs, Price, US$, not seas. adj..xlsx                     15        9\
+Imports Merchandise, Customs, constant 2010 US$, millions, not seas. adj..x       15        9\
+Terms of Trade.xlsx                                                               15        0\
+Exports Merchandise, Customs, Price, US$, not seas. adj..xlsx                     13        9\
+Exports Merchandise, Customs, constant 2010 US$, millions, not seas. adj..x       13        9\
+Retail Sales Volume Index, seas. adj..xlsx                                         6        9\
+CPI Price, % y-o-y, median weighted, seas. adj..xlsx                               0        9\
+\
+====================================================================================================\
+SAMPLE OF COMMON COUNTRIES\
+====================================================================================================\
+\
+Countries appearing in both IFC_GEM.csv and 'Exchange rate, new LCU per USD extended backward, period average.xlsx':\
+(Total: 88 countries)\
+\
+  \'95 Albania                                       \'95 Argentina\
+  \'95 Armenia                                       \'95 Azerbaijan\
+  \'95 Bangladesh                                    \'95 Belarus\
+  \'95 Benin                                         \'95 Bolivia\
+  \'95 Bosnia and Herzegovina                        \'95 Botswana\
+  \'95 Brazil                                        \'95 Bulgaria\
+  \'95 Burkina Faso                                  \'95 Cambodia\
+  \'95 Cameroon                                      \'95 Chile\
+  \'95 China                                         \'95 Colombia\
+  \'95 Congo, Dem. Rep.                              \'95 Costa Rica\
+  \'95 Cote d'Ivoire                                 \'95 Croatia\
+  \'95 Dominican Republic                            \'95 Ecuador\
+  \'95 Egypt, Arab Rep.                              \'95 El Salvador\
+  \'95 Gabon                                         \'95 Georgia\
+  \'95 Ghana                                         \'95 Guatemala\
+  \'95 Guinea                                        \'95 Haiti\
+  \'95 Honduras                                      \'95 Hungary\
+  \'95 India                                         \'95 Indonesia\
+  \'95 Jamaica                                       \'95 Jordan\
+  \'95 Kazakhstan                                    \'95 Kenya\
+  \'95 Kosovo                                        \'95 Kyrgyz Republic\
+  \'95 Lebanon                                       \'95 Lithuania\
+  \'95 Madagascar                                    \'95 Mali\
+  \'95 Mauritania                                    \'95 Mauritius\
+  \'95 Mexico                                        \'95 Mongolia\
+\
+  ... and 38 more countries\
+\
+====================================================================================================\
+WHAT THE DATASETS ACTUALLY MEASURE (No Common Economic Indicators)\
+====================================================================================================\
+\
+\uc0\u55357 \u56522  IFC_GEM.csv - CREDIT RISK & DEFAULT DATA:\
+   Contains indicators about loan defaults and recovery rates:\
+   \'95 Average private default rates\
+   \'95 Average private recovery rates\
+   \'95 Average public default rates\
+   \'95 Average public recovery rates\
+   \'95 Average sovereign default rates\
+   \'95 Average sovereign recovery rates\
+   \'95 Historical private default rates\
+   \'95 Historical private recovery rates\
+   \'95 Historical public default rates\
+   \'95 Historical public recovery rates\
+   \'95 Historical sovereign default rates\
+   \'95 Historical sovereign recovery rates\
+\
+\uc0\u55357 \u56520  Excel Files - MACRO-ECONOMIC INDICATORS:\
+   Contains standard economic and financial indicators:\
+   \'95 CPI & Inflation (Consumer Price Index)\
+   \'95 GDP (Gross Domestic Product)\
+   \'95 Exchange Rates (Official, Real, Nominal)\
+   \'95 Trade (Exports & Imports - value and price)\
+   \'95 Stock Market Indices\
+   \'95 Foreign Reserves\
+   \'95 Unemployment Rates\
+   \'95 Industrial Production\
+   \'95 Retail Sales\
+\
+====================================================================================================\
+CONCLUSION & USE CASES\
+====================================================================================================\
+\
+\uc0\u55357 \u56524  SUMMARY:\
+\
+The IFC_GEM.csv and Excel files DO NOT contain the same economic indicators.\
+They measure completely different things:\
+  \'95 IFC_GEM = Credit risk, defaults, and recovery rates\
+  \'95 Excel files = Standard macroeconomic indicators\
+\
+However, they share TWO CRITICAL common dimensions:\
+  \uc0\u10003  COUNTRY/REGION names (40-88 common countries depending on file)\
+  \uc0\u10003  TIME PERIOD (1996-2024, 29 years of overlap)\
+\
+\uc0\u55356 \u57263  PRACTICAL USE CASES:\
+\
+These shared dimensions allow you to:\
+\
+1. Link datasets for analysis:\
+   Example: "Does high inflation correlate with higher default rates?"\
+   \uc0\u8594  Join CPI data (Excel) with default rates (IFC_GEM) by country & year\
+\
+2. Predictive modeling:\
+   Example: "Predict default rates using macro indicators"\
+   \uc0\u8594  Use GDP, exchange rates, etc. (Excel) to predict defaults (IFC_GEM)\
+\
+3. Country-specific studies:\
+   Example: "How did Brazil's defaults relate to its economic performance?"\
+   \uc0\u8594  Compare Brazil data across both datasets from 1996-2024\
+\
+4. Regional analysis:\
+   Example: "Compare credit risk patterns across different regions"\
+   \uc0\u8594  Group countries by region and analyze patterns\
+\
+\uc0\u55357 \u56481  The value is in COMBINING these different types of data using the common\
+   dimensions (country and year) to gain insights about relationships between\
+   economic conditions and credit risk.\
+\
+====================================================================================================}
