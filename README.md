@@ -6,10 +6,17 @@ The Goal of the project is to construct a knowledge graph and publish a research
 1. World Bank : Global Economic Monitor
 ```
 https://datacatalog.worldbank.org/search/dataset/0037798/Global-Economic-Monitor
+
 ```
 2. World Bank : Global Emerging Markets Risk Database
 ```
 https://data360.worldbank.org/en/dataset/IFC_GEM
+```
+
+3. World Bank : Worldwide Governance Indicators
+```
+https://www.worldbank.org/en/publication/worldwide-governance-indicators
+
 ```
 
 # Goal
