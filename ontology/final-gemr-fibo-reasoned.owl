@@ -12,25 +12,29 @@
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:fibo-be-ge-ge="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"
      xmlns:fibo-ind-ei-ei="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/"
+     xmlns:fibo-fnd-arr-rt="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Ratings/"
      xmlns:fibo-fnd-utl-av="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"
      xmlns:fibo-fnd-acc-cur="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/"
+     xmlns:fibo-fnd-plc-loc="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/"
      xmlns:fibo-ind-ind-ind="https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/"
+     xmlns:fibo-fnd-arr-asmt="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/"
      xmlns:AnnotationVocabulary="https://www.omg.org/spec/Commons/AnnotationVocabulary/"
      xmlns:IdentifiersAndIndices="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/IdentifiersAndIndices/">
     <owl:Ontology rdf:about="https://gemr-kg.org/ontology">
-        <owl:versionIRI rdf:resource="https://gemr-kg.org/ontology/1.0.0"/>
+        <owl:versionIRI rdf:resource="https://gemr-kg.org/ontology/1.1.0"/>
         <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/"/>
         <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/"/>
-        <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/"/>
+        <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/"/>
+        <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Ratings/"/>
+        <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/"/>
         <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/"/>
-        <owl:imports rdf:resource="https://spec.edmcouncil.org/fibo/ontology/IND/Indicators/Indicators/"/>
         <dc:creator>GEMR-KG Project Team</dc:creator>
-        <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-11-09</dc:date>
-        <dc:description>Global Emerging Markets Risk Knowledge Graph Ontology - Integrating macroeconomic, governance, and credit risk data for comprehensive country-level risk analysis across Brazil, China, Mexico, Philippines, Poland, and Thailand (2002-2023).</dc:description>
-        <dc:title>GEMR-KG: Global Emerging Markets Risk Knowledge Graph Ontology</dc:title>
+        <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-11-29</dc:date>
+        <dc:description>Global Emerging Markets Risk Knowledge Graph Ontology - Refactored to inherit from FIBO.</dc:description>
+        <dc:title>GEMR-KG: Global Emerging Markets Risk Knowledge Graph Ontology (FIBO Aligned)</dc:title>
         <rdfs:comment>This ontology addresses four core challenges: (1) Inadequate comprehensive risk modeling integrating macroeconomic, financial, governance, and temporal data; (2) Poor understanding of systemic contagion and geographic spillovers; (3) Difficulty extracting actionable insights about market crashes and country similarity; (4) Inaccessible siloed data requiring intuitive query interfaces.</rdfs:comment>
         <rdfs:label>GEMR-KG Ontology</rdfs:label>
-        <owl:versionInfo>Version 1.0.0 - Initial release with 27 validated cross-dataset relationships, temporal chains, and 6 countries over 22 years</owl:versionInfo>
+        <owl:versionInfo>Version 1.1.0 - Refactored to inherit from FIBO</owl:versionInfo>
     </owl:Ontology>
     
 
@@ -399,31 +403,9 @@
 
     <owl:DatatypeProperty rdf:about="https://gemr-kg.org/ontology#contagionStrength">
         <rdfs:domain rdf:resource="https://gemr-kg.org/ontology#ContagionEvent"/>
-        <rdfs:range>
-            <rdfs:Datatype>
-                <owl:oneOf>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>high</rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>low</rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>moderate</rdf:first>
-                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </owl:oneOf>
-            </rdfs:Datatype>
-        </rdfs:range>
-        <rdfs:comment>Qualitative assessment of contagion strength: high, moderate, or low.</rdfs:comment>
+        <rdfs:comment>Data quality annotation: high, moderate, low.</rdfs:comment>
         <rdfs:label>contagion strength</rdfs:label>
+        <rdfs:range></rdfs:range>
     </owl:DatatypeProperty>
     
 
@@ -478,37 +460,9 @@
 
     <owl:DatatypeProperty rdf:about="https://gemr-kg.org/ontology#dataAvailability">
         <rdfs:domain rdf:resource="https://gemr-kg.org/ontology#Indicator"/>
-        <rdfs:range>
-            <rdfs:Datatype>
-                <owl:oneOf>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                        <rdf:first>complete</rdf:first>
-                        <rdf:rest>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                <rdf:first>missing</rdf:first>
-                                <rdf:rest>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>partial</rdf:first>
-                                        <rdf:rest>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>proxy</rdf:first>
-                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                            </rdf:Description>
-                                        </rdf:rest>
-                                    </rdf:Description>
-                                </rdf:rest>
-                            </rdf:Description>
-                        </rdf:rest>
-                    </rdf:Description>
-                </owl:oneOf>
-            </rdfs:Datatype>
-        </rdfs:range>
-        <rdfs:comment>Data quality annotation: complete (100% coverage), partial (some gaps), proxy (uses substitute indicator), or missing (not available).</rdfs:comment>
+        <rdfs:comment>Data quality annotation: complete, partial, proxy, or missing.</rdfs:comment>
         <rdfs:label>data availability</rdfs:label>
+        <rdfs:range></rdfs:range>
     </owl:DatatypeProperty>
     
 
@@ -722,6 +676,21 @@
     <!-- https://gemr-kg.org/ontology#ContagionEvent -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#ContagionEvent">
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Assessments/AssessmentEvent"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#affects"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="https://gemr-kg.org/ontology#Country"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#originatesFrom"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="https://gemr-kg.org/ontology#Country"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>Represents a systemic crisis event that spreads from one country to others through trade, currency, or political channels.</rdfs:comment>
         <rdfs:label>Contagion Event</rdfs:label>
         <skos:example>Thailand Currency Crisis 1997 triggering regional contagion to Philippines and China</skos:example>
@@ -759,6 +728,7 @@
     <!-- https://gemr-kg.org/ontology#Country -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#Country">
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/BE/GovernmentEntities/GovernmentEntities/SovereignState"/>
         <rdfs:comment>An emerging market country in the GEMR-KG dataset: Brazil, China, Mexico, Philippines, Poland, or Thailand.</rdfs:comment>
         <rdfs:label>Country</rdfs:label>
     </owl:Class>
@@ -799,6 +769,7 @@
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#ExchangeRate">
         <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#MacroeconomicIndicator"/>
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Accounting/CurrencyAmount/ExchangeRate"/>
         <rdfs:comment>Currency exchange rates including official rate (LCU per USD), real effective exchange rate, and nominal effective exchange rate.</rdfs:comment>
         <rdfs:label>Exchange Rate</rdfs:label>
     </owl:Class>
@@ -829,6 +800,7 @@
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#GDP">
         <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#MacroeconomicIndicator"/>
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/GrossDomesticProduct"/>
     </owl:Class>
     
 
@@ -836,6 +808,7 @@
     <!-- https://gemr-kg.org/ontology#GeographicRegion -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#GeographicRegion">
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/GeographicRegion"/>
         <rdfs:comment>Geographic classification: Asia, Latin America, or Europe.</rdfs:comment>
         <rdfs:label>Geographic Region</rdfs:label>
     </owl:Class>
@@ -862,6 +835,25 @@
     
 
 
+    <!-- https://gemr-kg.org/ontology#HighGovernanceCountry -->
+
+    <owl:Class rdf:about="https://gemr-kg.org/ontology#HighGovernanceCountry">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://gemr-kg.org/ontology#Country"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#belongsToCluster"/>
+                        <owl:hasValue rdf:resource="https://gemr-kg.org/ontology#HighGovernanceCluster"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment>Countries in High Governance Cluster must have all 6 WGI indicators &gt;+0.4 (strong rule of law, low corruption, high regulatory quality).</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- https://gemr-kg.org/ontology#Imports -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#Imports">
@@ -875,6 +867,7 @@
     <!-- https://gemr-kg.org/ontology#Indicator -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#Indicator">
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/EconomicIndicator"/>
         <rdfs:comment>Abstract parent class for all measurable economic, governance, and financial indicators.</rdfs:comment>
         <rdfs:label>Indicator</rdfs:label>
     </owl:Class>
@@ -974,6 +967,25 @@
     <!-- https://gemr-kg.org/ontology#RiskScore -->
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#RiskScore">
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/FND/Arrangements/Ratings/QuantitativeRatingScore"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#totalRiskScore"/>
+                <owl:someValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</xsd:minInclusive>
+                            </rdf:Description>
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>Comprehensive country risk score (0-100) aggregating governance, economic health, default risk, external vulnerability, and contagion risk components for a specific year.</rdfs:comment>
         <rdfs:label>Risk Score</rdfs:label>
     </owl:Class>
@@ -1004,6 +1016,7 @@
 
     <owl:Class rdf:about="https://gemr-kg.org/ontology#Unemployment">
         <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#MacroeconomicIndicator"/>
+        <rdfs:subClassOf rdf:resource="https://spec.edmcouncil.org/fibo/ontology/IND/EconomicIndicators/EconomicIndicators/UnemploymentRate"/>
         <rdfs:comment>Unemployment rate (seasonally adjusted), correlates positively with default risk.</rdfs:comment>
         <rdfs:label>Unemployment Rate</rdfs:label>
     </owl:Class>
@@ -1026,6 +1039,12 @@
         <rdfs:comment>A calendar year in the dataset range 2002-2023.</rdfs:comment>
         <rdfs:label>Year</rdfs:label>
     </owl:Class>
+    
+
+
+    <!-- https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/GeographicRegion -->
+
+    <owl:Class rdf:about="https://spec.edmcouncil.org/fibo/ontology/FND/Places/Locations/GeographicRegion"/>
     
 
 
@@ -1319,9 +1338,6 @@
         <rdfs:comment>Most recent year in dataset with complete risk score assessments for all six countries.</rdfs:comment>
         <rdfs:label>2023</rdfs:label>
     </owl:NamedIndividual>
-    <rdf:Description>
-        <rdfs:comment>Countries in High Governance Cluster must have all 6 WGI indicators &gt;+0.4 (strong rule of law, low corruption, high regulatory quality).</rdfs:comment>
-    </rdf:Description>
     
 
 
@@ -1354,28 +1370,6 @@
 
     <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="https://gemr-kg.org/ontology#ContagionEvent"/>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#affects"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://gemr-kg.org/ontology#Country"/>
-            </owl:Restriction>
-        </owl:intersectionOf>
-        <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#ContagionEvent"/>
-    </owl:Class>
-    <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="https://gemr-kg.org/ontology#ContagionEvent"/>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#originatesFrom"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://gemr-kg.org/ontology#Country"/>
-            </owl:Restriction>
-        </owl:intersectionOf>
-        <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#ContagionEvent"/>
-    </owl:Class>
-    <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
             <rdf:Description rdf:about="https://gemr-kg.org/ontology#Observation"/>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#hasCountry"/>
@@ -1394,28 +1388,6 @@
             </owl:Restriction>
         </owl:intersectionOf>
         <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#Observation"/>
-    </owl:Class>
-    <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="https://gemr-kg.org/ontology#RiskScore"/>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://gemr-kg.org/ontology#totalRiskScore"/>
-                <owl:someValuesFrom>
-                    <rdfs:Datatype>
-                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-                        <owl:withRestrictions rdf:parseType="Collection">
-                            <rdf:Description>
-                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</xsd:minInclusive>
-                            </rdf:Description>
-                            <rdf:Description>
-                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</xsd:maxInclusive>
-                            </rdf:Description>
-                        </owl:withRestrictions>
-                    </rdfs:Datatype>
-                </owl:someValuesFrom>
-            </owl:Restriction>
-        </owl:intersectionOf>
-        <rdfs:subClassOf rdf:resource="https://gemr-kg.org/ontology#RiskScore"/>
     </owl:Class>
     <rdf:Description>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
