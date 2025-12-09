@@ -59,6 +59,7 @@ This guide explains how to build and run the custom GraphDB Docker image with th
 Run this command from the directory containing the `Dockerfile`:
 
 ```bash
+cd Docker
 docker build -t my-graphdb-image .
 ```
 
@@ -118,6 +119,7 @@ This project is a React-based frontend that visualizes economic data on an inter
 The frontend relies on the GraphDB backend. Make sure the container is running on port 7200.
 
 ```bash
+cd frontend
 # Run the custom GraphDB image (detached mode)
 docker run -d -p 7200:7200 --name graphdb-instance my-graphdb-image
 ```
