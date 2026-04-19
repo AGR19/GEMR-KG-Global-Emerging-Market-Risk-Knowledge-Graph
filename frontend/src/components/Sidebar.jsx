@@ -9,6 +9,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
   const navItems = [
     { id: 'home', label: 'Home', icon: '🏠' },
+    { id: 'ask', label: 'Ask AI', icon: '🤖' },
     { id: 'about', label: 'About', icon: 'ℹ️' },
   ];
 
