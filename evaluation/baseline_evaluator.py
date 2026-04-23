@@ -1,25 +1,44 @@
 """
-Baseline evaluator: GPT-4o (OpenAI) and Claude Sonnet (via OpenRouter).
-Both use the identical minimal GEMR-KG system prompt — no IRI grounding,
+Baseline evaluator: All models via OpenRouter.
+Uses an identical minimal GEMR-KG system prompt — no IRI grounding,
 no ontology schema dump, no self-healing retry loop.
+
+Supported models:
+  - anthropic/claude-haiku-4.5
+  - anthropic/claude-sonnet-4.6
+  - anthropic/claude-opus-4.6
+  - google/gemma-4-26b-a4b-it
+  - google/gemma-4-31b-it
+  - openai/gpt-5
+  - openai/gpt-5-mini
 """
 
 import re
 import time
 import os
 import sys
-from typing import Literal
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from openai import OpenAI
 from evaluation.sparql_utils import execute_sparql
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "anthropic/claude-sonnet-4-5")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+
+# ── Model Registry ──────────────────────────────────────────────────────────
+# Maps short condition names → OpenRouter model IDs
+MODEL_REGISTRY: dict[str, str] = {
+    "claude_haiku":   "anthropic/claude-haiku-4.5",
+    "claude_sonnet":  "anthropic/claude-sonnet-4.6",
+    "claude_opus":    "anthropic/claude-opus-4.6",
+    "gemma_26b":      "google/gemma-4-26b-a4b-it",
+    "gemma_31b":      "google/gemma-4-31b-it",
+    "gpt5":           "openai/gpt-5",
+    "gpt5_mini":      "openai/gpt-5-mini",
+}
+
+ALL_BASELINE_CONDITIONS = list(MODEL_REGISTRY.keys())
 
 BASELINE_SYSTEM_PROMPT = """\
 You are a SPARQL query generator for the GEMR-KG (Global Emerging Markets Risk Knowledge Graph).
@@ -45,20 +64,10 @@ Standard prefixes:
 Output ONLY a valid SPARQL query. No explanation, no markdown fences, no code blocks.\
 """
 
-_openai_client: OpenAI | None = None
 _openrouter_client: OpenAI | None = None
 
 
-def _get_openai_client() -> OpenAI:
-    global _openai_client
-    if _openai_client is None:
-        if not OPENAI_API_KEY:
-            raise RuntimeError("OPENAI_API_KEY is not set.")
-        _openai_client = OpenAI(api_key=OPENAI_API_KEY)
-    return _openai_client
-
-
-def _get_openrouter_client() -> OpenAI:
+def _get_client() -> OpenAI:
     global _openrouter_client
     if _openrouter_client is None:
         if not OPENROUTER_API_KEY:
@@ -83,49 +92,63 @@ def _extract_sparql(text: str) -> str:
     return "\n".join(out).strip() if out else text.strip()
 
 
-def _call_model(client: OpenAI, model: str, question: str) -> str:
+def _call_model(model_id: str, question: str) -> str:
+    """Call a model via OpenRouter with the baseline system prompt."""
+    client = _get_client()
+    # GPT-5 family reasoning models require `max_completion_tokens` and reject
+    # `max_tokens`. Also they ignore `temperature` != 1 — leave it at default.
+    is_gpt5 = "gpt-5" in model_id
     for attempt in range(3):
         try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
+            kwargs = {
+                "model": model_id,
+                "messages": [
                     {"role": "system", "content": BASELINE_SYSTEM_PROMPT},
                     {"role": "user", "content": f"QUESTION: {question}\n\nGenerate the SPARQL query:"},
                 ],
-                temperature=0.1,
-                max_tokens=600,
-            )
+            }
+            if is_gpt5:
+                kwargs["max_completion_tokens"] = 6000
+            else:
+                kwargs["temperature"] = 0.1
+                kwargs["max_tokens"] = 600
+            response = client.chat.completions.create(**kwargs)
             raw = response.choices[0].message.content or ""
             return _extract_sparql(raw)
         except Exception as e:
             err = str(e)
-            if any(x in err for x in ("429", "rate_limit", "RESOURCE_EXHAUSTED", "529")):
+            if any(x in err for x in ("429", "rate_limit", "RESOURCE_EXHAUSTED", "529", "503")):
                 wait = 15 * (attempt + 1)
                 print(f"    [rate limit] waiting {wait}s...")
                 time.sleep(wait)
             else:
-                print(f"    [error] {err[:120]}")
+                print(f"    [error] {err[:150]}")
                 raise
     return ""
 
 
-def evaluate_baseline_question(
-    question: str,
-    condition: Literal["gpt4o", "claude"],
-) -> dict:
+def evaluate_baseline_question(question: str, condition: str) -> dict:
     """
-    Run one question through the chosen baseline condition.
+    Run one question through the chosen baseline model via OpenRouter.
+
+    Args:
+        question:  The natural language question.
+        condition: One of the keys in MODEL_REGISTRY (e.g. "claude_haiku", "gpt5").
 
     Returns:
         {sparql, execution, elapsed_seconds}
     """
+    if condition not in MODEL_REGISTRY:
+        raise ValueError(
+            f"Unknown condition '{condition}'. "
+            f"Valid: {', '.join(MODEL_REGISTRY.keys())}"
+        )
+
+    model_id = MODEL_REGISTRY[condition]
     t0 = time.time()
 
     try:
-        if condition == "gpt4o":
-            sparql = _call_model(_get_openai_client(), OPENAI_MODEL, question)
-        else:
-            sparql = _call_model(_get_openrouter_client(), OPENROUTER_MODEL, question)
+        sparql = _call_model(model_id, question)
     except Exception as e:
         return {
             "sparql": "",

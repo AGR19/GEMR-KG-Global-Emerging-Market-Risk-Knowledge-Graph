@@ -465,6 +465,284 @@ SELECT ?name ?econ ?gov WHERE {
 
 ---
 
+
+---
+
+## Paper Validation (7 queries)
+
+| ID | Question | Category | What It Tests |
+|---|---|---|---|
+| **P01** | Comprehensive risk profile for Poland in 2023 | Optional paths | Risk Profile Dashboard (2023) from paper |
+| **P02** | Stock market performance predicting default rates | Cross-indicator | Early Warning (Stock -> Default) from paper |
+| **P03** | Political stability impact on GDP | Cross-indicator | Political Stability -> GDP from paper |
+| **P04** | Stock market vs real economy GDP | Cross-indicator | Default -> Recovery from paper |
+| **P05** | GDP growth tracker | Calculation | GDP Growth Tracker from paper |
+| **P06** | Trade-based contagion (GDP -> Exports -> GDP) | Multi-hop contagion | Trade-Based Contagion from paper |
+| **P07** | Currency crisis early warning spillover | Multi-hop contagion | Currency Crisis Early Warning from paper |
+
+---
+
+### P01 — Risk Profile Dashboard (2023)
+
+**Logic:** Retrieves the total risk score, risk classification, and all underlying component scores (Governance, Economic, etc.) for Poland in 2023. Tests extensive use of OPTIONAL matching.
+
+```sparql
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?countryName ?year ?totalScore ?riskTier ?govScore ?econScore ?vulnScore ?contagionScore
+WHERE {
+    BIND("2023"^^xsd:gYear AS ?targetYear)
+    BIND("Poland" AS ?targetCountry)
+    ?scoreObs a gemr:RiskScore ;
+              gemr:hasCountry ?country ;
+              gemr:hasYear ?yearEntity ;
+              gemr:totalRiskScore ?totalScore .
+    ?country gemr:countryName ?countryName .
+    ?yearEntity gemr:yearValue ?year .
+    FILTER (?year = ?targetYear)
+    FILTER (STR(?countryName) = ?targetCountry)
+    OPTIONAL { ?scoreObs gemr:riskTier ?riskTier }
+    OPTIONAL { ?scoreObs gemr:governanceScore ?govScore }
+    OPTIONAL { ?scoreObs gemr:economicHealthScore ?econScore }
+    OPTIONAL { ?scoreObs gemr:externalVulnerabilityScore ?vulnScore }
+    OPTIONAL { ?scoreObs gemr:contagionRiskScore ?contagionScore }
+}
+```
+
+---
+
+### P02 — Early Warning (Stock -> Default)
+
+**Logic:** Stock Market (t) vs Default Risk (t+1). Tests temporal lags and cross-indicator joins across consecutive years.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?countryName ?yearInt ?stockValue ?targetYearInt (AVG(xsd:float(?defaultRate)) AS ?avgDefaultRate)
+WHERE {
+    ?obsStock a gemr:Stock_Market_Index_LCU ;
+              gemr:hasCountry ?c ;
+              gemr:hasYear ?yearEntity ;
+              gemr:observationValue ?stockValue .
+    ?yearEntity gemr:yearValue ?yearLiteral .
+    BIND(xsd:integer(STR(?yearLiteral)) AS ?yearInt)
+    BIND(?yearInt + 1 AS ?targetYearInt)
+    ?targetYearEntity gemr:yearValue ?targetYearLiteral .
+    FILTER(xsd:integer(STR(?targetYearLiteral)) = ?targetYearInt)
+    ?obsDefault a gemr:PrivateDefaultRate ;
+                gemr:hasCountry ?c ;
+                gemr:hasYear ?targetYearEntity ;
+                gemr:observationValue ?defaultRate .
+    ?c gemr:countryName ?countryName .
+}
+GROUP BY ?countryName ?yearInt ?stockValue ?targetYearInt
+ORDER BY ?countryName ?yearInt
+LIMIT 100
+```
+
+---
+
+### P03 — Political Stability -> GDP
+
+**Logic:** Impact of Political Stability (t) on GDP (t+1). Tests finding negative governance scores and joining with economic outcomes the following year.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?countryName ?yearInt (AVG(xsd:float(?polStability)) AS ?avgPolStability) ?targetYearInt ?gdpValue
+WHERE {
+    ?obsPol a gemr:PoliticalStability ;
+            gemr:hasCountry ?c ;
+            gemr:hasYear ?yearEntity ;       
+            gemr:observationValue ?polStability .
+    FILTER(?polStability < 0)
+    ?yearEntity gemr:yearValue ?yearLiteral .
+    BIND(xsd:integer(STR(?yearLiteral)) AS ?yearInt)
+    BIND(?yearInt + 1 AS ?targetYearInt)
+    ?obsEco a gemr:GDP_CONST_2010_USD ;
+            gemr:hasCountry ?c ;
+            gemr:hasYear ?gdpYearRaw ;
+            gemr:observationValue ?gdpValue .
+    OPTIONAL { ?gdpYearRaw gemr:yearValue ?gdpYearVal }
+    BIND(COALESCE(xsd:integer(STR(?gdpYearVal)), ?gdpYearRaw) AS ?gdpYearInt)
+    FILTER(?gdpYearInt = ?targetYearInt)
+    ?c gemr:countryName ?countryName .
+}
+GROUP BY ?countryName ?yearInt ?targetYearInt ?gdpValue
+ORDER BY ?countryName ?yearInt
+LIMIT 50
+```
+
+---
+
+### P04 — Default -> Recovery
+
+**Logic:** Stock Market (t) vs Real Economy GDP (t+1). Tests cross-indicator alignment with flexible year handling.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?countryName ?yearT (AVG(xsd:float(?stockValue)) AS ?avgStockValue) ?yearTarget ?gdpValue
+WHERE {
+    ?obsStock a gemr:Stock_Market_Index_LCU ; 
+              gemr:hasCountry ?c ;
+              gemr:hasYear ?yearT_Raw ; 
+              gemr:observationValue ?stockValue .
+    ?obsGDP a gemr:GDP_CONST_2010_USD ; 
+            gemr:hasCountry ?c ; 
+            gemr:hasYear ?yearTarget_Raw ; 
+            gemr:observationValue ?gdpValue .
+    OPTIONAL { ?yearT_Raw gemr:yearValue ?yValT } 
+    OPTIONAL { ?yearTarget_Raw gemr:yearValue ?yValTarget } 
+    BIND(COALESCE(xsd:integer(STR(?yValT)), ?yearT_Raw) AS ?yearT) 
+    BIND(COALESCE(xsd:integer(STR(?yValTarget)), ?yearTarget_Raw) AS ?yearTarget) 
+    FILTER(?yearTarget = ?yearT + 1) 
+    ?c gemr:countryName ?countryName . 
+}
+GROUP BY ?countryName ?yearT ?yearTarget ?gdpValue
+ORDER BY ?countryName ?yearT
+```
+
+---
+
+### P05 — GDP Growth Tracker
+
+**Logic:** Calculated annual GDP growth (t vs t-1). Tests joining the same indicator across consecutive years and computing the percentage change formula.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?countryName ?year ?gdpVal_Current ?growthRatePercent
+WHERE {
+    ?obsGDP_T a gemr:GDP_CONST_2010_USD ;
+              gemr:hasCountry ?c ;
+              gemr:hasYear ?yT_Raw ;
+              gemr:observationValue ?gdpVal_Current .
+    ?obsGDP_Prev a gemr:GDP_CONST_2010_USD ;
+                 gemr:hasCountry ?c ;
+                 gemr:hasYear ?yPrev_Raw ;
+                 gemr:observationValue ?gdpVal_Prev .
+    OPTIONAL { ?yT_Raw gemr:yearValue ?yValT }
+    OPTIONAL { ?yPrev_Raw gemr:yearValue ?yValPrev }
+    BIND(COALESCE(xsd:integer(STR(?yValT)), ?yT_Raw) AS ?year)
+    BIND(COALESCE(xsd:integer(STR(?yValPrev)), ?yPrev_Raw) AS ?yearPrev)
+    FILTER(?yearPrev = ?year - 1)
+    BIND(((?gdpVal_Current - ?gdpVal_Prev) / ?gdpVal_Prev) * 100 AS ?growthRatePercent)
+    ?c gemr:countryName ?countryName .
+}
+ORDER BY ?countryName ?year
+LIMIT 100
+```
+
+---
+
+### P06 — Trade-Based Contagion
+
+**Logic:** GDP (Source t) -> Exports (Partner t) -> GDP (Partner t+1). Extremely complex multi-hop contagion analysis utilizing UNIONs for linkage types and multiple growth rate calculations.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?sourceCountry ?partnerCountry ?yearT 
+       (AVG(?sourceGDP_Growth_Pct) AS ?avgSourceGrowth)
+       (AVG(?partnerExport_Growth_Pct) AS ?avgPartnerExportGrowth)
+       (AVG(?partnerGDP_Growth_NextYear_Pct) AS ?avgPartnerNextGDP)
+WHERE {
+    { ?partner gemr:similarTo ?source . } 
+    UNION 
+    { ?partner gemr:belongsToCluster ?cluster . ?source gemr:belongsToCluster ?cluster . FILTER(?source != ?partner) } 
+    UNION 
+    { 
+        ?source gemr:countryName ?sName . ?partner gemr:countryName ?pName . 
+        FILTER ((STR(?sName) = "Brazil" && STR(?pName) = "Mexico")) 
+    }
+    ?obsSourceGDP_T a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?source ; gemr:hasYear ?yT_Raw ; gemr:observationValue ?s_gdp_T .
+    ?obsSourceGDP_Prev a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?source ; gemr:hasYear ?yPrev_Raw ; gemr:observationValue ?s_gdp_Prev .
+    ?obsPartnerExp_T a gemr:EXPORTS_CURR_SEAS ; gemr:hasCountry ?partner ; gemr:hasYear ?yT_Raw ; gemr:observationValue ?p_exp_T .
+    ?obsPartnerExp_Prev a gemr:EXPORTS_CURR_SEAS ; gemr:hasCountry ?partner ; gemr:hasYear ?yPrev_Raw ; gemr:observationValue ?p_exp_Prev .
+    ?obsPartnerGDP_Next a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?partner ; gemr:hasYear ?yNext_Raw ; gemr:observationValue ?p_gdp_Next .
+    ?obsPartnerGDP_T_ForCalc a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?partner ; gemr:hasYear ?yT_Raw ; gemr:observationValue ?p_gdp_T .
+    OPTIONAL { ?yT_Raw gemr:yearValue ?yT_Val }
+    OPTIONAL { ?yPrev_Raw gemr:yearValue ?yPrev_Val }
+    OPTIONAL { ?yNext_Raw gemr:yearValue ?yNext_Val }
+    BIND(COALESCE(xsd:integer(STR(?yT_Val)), ?yT_Raw) AS ?yearT)
+    BIND(COALESCE(xsd:integer(STR(?yPrev_Val)), ?yPrev_Raw) AS ?yearPrev)
+    BIND(COALESCE(xsd:integer(STR(?yNext_Val)), ?yNext_Raw) AS ?yearNext)
+    FILTER(?yearPrev = ?yearT - 1)
+    FILTER(?yearNext = ?yearT + 1)
+    BIND(((?s_gdp_T - ?s_gdp_Prev) / ?s_gdp_Prev) * 100 AS ?sourceGDP_Growth_Pct)
+    BIND(((?p_exp_T - ?p_exp_Prev) / ?p_exp_Prev) * 100 AS ?partnerExport_Growth_Pct)
+    BIND(((?p_gdp_Next - ?p_gdp_T) / ?p_gdp_T) * 100 AS ?partnerGDP_Growth_NextYear_Pct)
+    ?source gemr:countryName ?sourceCountry .
+    ?partner gemr:countryName ?partnerCountry .
+}
+GROUP BY ?sourceCountry ?partnerCountry ?yearT
+ORDER BY ?sourceCountry ?yearT
+LIMIT 50
+```
+
+---
+
+### P07 — Currency Crisis Early Warning
+
+**Logic:** Regional currency contagion spillover analysis. Tests subqueries, conditional logic (IF statements), and complex chaining of events.
+
+```sparql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+
+SELECT ?sourceCountry ?targetCountry ?year 
+       ?avgSourceDepr ?avgTargetDepr
+       (IF(?avgTargetDepr > 10, "HIGH (Spillover Confirmed)", 
+        IF(?avgTargetDepr > 5, "MODERATE (Stress)", "LOW (Resilient)")) 
+        AS ?contagionRiskLevel)
+WHERE {
+    {
+        SELECT ?sourceCountry ?targetCountry ?year 
+               (AVG(?sourceDepreciation_Pct) AS ?avgSourceDepr) 
+               (AVG(?targetDepreciation_Pct) AS ?avgTargetDepr) 
+        WHERE { 
+            ?obsSource_T a gemr:Exchange_rate_new_LCU_per_USD ; gemr:hasCountry ?source ; gemr:hasYear ?yearEntity ; gemr:observationValue ?sVal_T .
+            ?yearEntity gemr:yearValue ?y_Lit .
+            BIND(xsd:integer(STR(?y_Lit)) AS ?year)
+            BIND(?year - 1 AS ?yearPrev) 
+            ?obsSource_Prev a gemr:Exchange_rate_new_LCU_per_USD ; gemr:hasCountry ?source ; gemr:hasYear ?prevYearEntity ; gemr:observationValue ?sVal_Prev .
+            ?prevYearEntity gemr:yearValue ?prevY_Lit .
+            FILTER(xsd:integer(STR(?prevY_Lit)) = ?yearPrev)
+            BIND(((?sVal_T - ?sVal_Prev) / ?sVal_Prev) * 100 AS ?sourceDepreciation_Pct) 
+            FILTER(?sourceDepreciation_Pct > 15) 
+            VALUES (?sName ?tName) { 
+                 ("Brazil" "Mexico") 
+                 ("Thailand" "Philippines") 
+            } 
+            ?source gemr:countryName ?sName . 
+            ?target gemr:countryName ?tName . 
+            ?obsTarget_T a gemr:Exchange_rate_new_LCU_per_USD ; gemr:hasCountry ?target ; gemr:hasYear ?yearEntity ; gemr:observationValue ?tVal_T .
+            ?obsTarget_Prev a gemr:Exchange_rate_new_LCU_per_USD ; gemr:hasCountry ?target ; gemr:hasYear ?prevYearEntity ; gemr:observationValue ?tVal_Prev .
+            BIND(((?tVal_T - ?tVal_Prev) / ?tVal_Prev) * 100 AS ?targetDepreciation_Pct) 
+            ?source gemr:countryName ?sourceCountry . 
+            ?target gemr:countryName ?targetCountry . 
+        } 
+        GROUP BY ?sourceCountry ?targetCountry ?year
+    }
+}
+ORDER BY DESC(?avgSourceDepr)
+LIMIT 100
+```
+
+
 ## Questions Changed from Original Set
 
 | ID | Original Question | New Question | Reason |
