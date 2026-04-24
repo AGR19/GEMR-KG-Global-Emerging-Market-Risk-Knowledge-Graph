@@ -16,12 +16,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from .config import OWL_FILE, TTL_FILE
+from .config import OWL_FILE, TTL_FILE, AVAILABLE_MODELS, DEFAULT_MODEL_KEY
 from .pipeline.schema_loader import load_schema, GEMRSchema
 from .pipeline.embedder import build_embeddings
 from .pipeline.grounding import retrieve_relevant_iris
 from .pipeline.prompt_builder import build_system_prompt, build_query_prompt
-from .pipeline.sparql_generator import generate_sparql
+from .pipeline.sparql_generator import generate_sparql, resolve_model
 from .pipeline.self_healer import heal_and_execute
 from .pipeline.answer_generator import generate_natural_language_answer
 
@@ -92,7 +92,8 @@ app.add_middleware(
 
 class AskRequest(BaseModel):
     question: str
-    use_history: bool = True  # Include conversation context for follow-ups
+    use_history: bool = True                # Include conversation context for follow-ups
+    model: str | None = None                # Short key from AVAILABLE_MODELS; None → default
 
 
 class AskResponse(BaseModel):
@@ -106,6 +107,7 @@ class AskResponse(BaseModel):
     elapsed_seconds: float = 0.0
     error: str | None = None
     history: list[dict] = []
+    model: str | None = None                # The short key actually used to produce this answer
 
 
 # ─── Endpoints ──────────────────────────────────────────────
@@ -121,6 +123,24 @@ async def health():
     }
 
 
+@app.get("/api/models")
+async def list_models():
+    """Return the catalogue of LLMs the pipeline can be run against.
+
+    The frontend uses this to populate the model picker. `default` is the
+    key pre-selected in the UI (Gemini 2.5 Flash — highest AA in the
+    benchmark, see evaluation/EVALUATION_REPORT.md).
+    """
+    return {
+        "default": DEFAULT_MODEL_KEY,
+        "models": [
+            {"key": key, "display_name": info["display_name"],
+             "openrouter_id": info["id"], "notes": info["notes"]}
+            for key, info in AVAILABLE_MODELS.items()
+        ],
+    }
+
+
 @app.post("/api/ask", response_model=AskResponse)
 async def ask(request: AskRequest):
     """
@@ -131,9 +151,11 @@ async def ask(request: AskRequest):
 
     start = time.time()
     question = request.question.strip()
+    _, model_key = resolve_model(request.model)  # normalises None / unknown → default
 
     print(f"\n{'─' * 50}")
     print(f"Question: {question}")
+    print(f"Model:    {model_key}")
     print(f"{'─' * 50}")
 
     try:
@@ -149,17 +171,17 @@ async def ask(request: AskRequest):
 
         # Step 3: Generate SPARQL
         print("[Pipeline] Step 3: Generating SPARQL...")
-        sparql = generate_sparql(system_prompt, query_prompt)
+        sparql = generate_sparql(system_prompt, query_prompt, model_key=model_key)
         print(f"  Generated query ({len(sparql)} chars)")
 
         # Step 4: Self-Healing Execution
         print("[Pipeline] Step 4: Execute + Self-Heal...")
-        result = heal_and_execute(question, sparql, system_prompt, grounded)
+        result = heal_and_execute(question, sparql, system_prompt, grounded, model_key=model_key)
 
         nl_answer = None
         if result["success"]:
             print(f"[Pipeline] ✓ Done in {round(time.time() - start, 2)}s ({result['attempts']} attempt(s)). Generating NL Answer...")
-            nl_answer = generate_natural_language_answer(question, result["data"])
+            nl_answer = generate_natural_language_answer(question, result["data"], model_key=model_key)
 
         elapsed = round(time.time() - start, 2)
 
@@ -195,6 +217,7 @@ async def ask(request: AskRequest):
             elapsed_seconds=elapsed,
             error=result["history"][-1]["error"] if not result["success"] else None,
             history=result["history"],
+            model=model_key,
         )
 
     except Exception as e:
@@ -206,6 +229,7 @@ async def ask(request: AskRequest):
             sparql="",
             error=str(e),
             elapsed_seconds=elapsed,
+            model=model_key,
         )
 
 

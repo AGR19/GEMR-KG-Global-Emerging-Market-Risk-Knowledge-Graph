@@ -14,6 +14,8 @@ const AskAI = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [backendStatus, setBackendStatus] = useState(null);
+  const [models, setModels] = useState([]);
+  const [selectedModel, setSelectedModel] = useState('');
   const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom
@@ -29,6 +31,19 @@ const AskAI = () => {
       .catch(() => setBackendStatus({ status: 'error' }));
   }, []);
 
+  // Load available LLMs — populates the picker; first element is the default
+  useEffect(() => {
+    fetch('/api/models')
+      .then(r => r.json())
+      .then(data => {
+        setModels(data.models || []);
+        setSelectedModel(data.default || '');
+      })
+      .catch(() => {
+        // Backend offline — leave models empty, requests will use server default
+      });
+  }, []);
+
   const handleSend = async (question) => {
     const q = (question || input).trim();
     if (!q || loading) return;
@@ -41,7 +56,11 @@ const AskAI = () => {
       const res = await fetch('/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: q, use_history: true }),
+        body: JSON.stringify({
+          question: q,
+          use_history: true,
+          model: selectedModel || undefined,
+        }),
       });
       const data = await res.json();
 
@@ -82,11 +101,26 @@ const AskAI = () => {
             <p style={styles.headerSub}>Natural language queries powered by ontology-aware AI</p>
           </div>
         </div>
-        <div style={{
-          ...styles.statusDot,
-          background: backendStatus?.status === 'ok' ? '#22c55e' : '#ef4444',
-        }}>
-          {backendStatus?.status === 'ok' ? '● Online' : '● Offline'}
+        <div style={styles.headerRight}>
+          {models.length > 0 && (
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={loading}
+              style={styles.modelSelect}
+              title="Choose the LLM used to generate SPARQL. Gemini 2.5 Flash scored highest AA (78%) in our benchmark."
+            >
+              {models.map(m => (
+                <option key={m.key} value={m.key}>{m.display_name}</option>
+              ))}
+            </select>
+          )}
+          <div style={{
+            ...styles.statusDot,
+            background: backendStatus?.status === 'ok' ? '#22c55e' : '#ef4444',
+          }}>
+            {backendStatus?.status === 'ok' ? '● Online' : '● Offline'}
+          </div>
         </div>
       </div>
 
@@ -425,9 +459,21 @@ const styles = {
     background: '#fff',
   },
   headerLeft: { display: 'flex', alignItems: 'center', gap: '12px' },
+  headerRight: { display: 'flex', alignItems: 'center', gap: '12px' },
   headerIcon: { fontSize: '28px' },
   headerTitle: { margin: 0, fontSize: '18px', fontWeight: 700, color: '#0f172a' },
   headerSub: { margin: 0, fontSize: '13px', color: '#64748b' },
+  modelSelect: {
+    fontSize: '12px',
+    padding: '6px 10px',
+    borderRadius: '8px',
+    border: '1px solid #cbd5e1',
+    background: '#f8fafc',
+    color: '#0f172a',
+    cursor: 'pointer',
+    fontWeight: 500,
+    maxWidth: '260px',
+  },
   statusDot: {
     fontSize: '12px',
     padding: '4px 10px',

@@ -80,6 +80,7 @@ def heal_and_execute(
     initial_sparql: str,
     system_prompt: str,
     grounded_iris: list[dict],
+    model_key: str | None = None,
 ) -> dict:
     """
     Execute SPARQL with self-healing retry loop.
@@ -152,7 +153,7 @@ def heal_and_execute(
                     error_message=empty_error,
                     grounded_iris=grounded_iris,
                 )
-                current_sparql = generate_sparql(system_prompt, repair_prompt)
+                current_sparql = generate_sparql(system_prompt, repair_prompt, model_key=model_key)
                 print(f"  [Self-Healer]   Generated repaired query")
                 continue
             else:
@@ -186,7 +187,7 @@ def heal_and_execute(
                 error_message=result["error"],
                 grounded_iris=grounded_iris,
             )
-            current_sparql = generate_sparql(system_prompt, repair_prompt)
+            current_sparql = generate_sparql(system_prompt, repair_prompt, model_key=model_key)
             print(f"  [Self-Healer]   Generated repaired query")
 
     # All attempts exhausted

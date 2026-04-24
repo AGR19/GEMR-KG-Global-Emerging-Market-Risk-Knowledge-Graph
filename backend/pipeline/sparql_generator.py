@@ -1,83 +1,109 @@
 """
-SPARQL Generator — Calls Gemini to generate SPARQL from a structured prompt.
+SPARQL Generator — calls OpenRouter to generate SPARQL from a structured prompt.
 
-Handles the LLM call and extracts a clean SPARQL query from the response.
+Matches the evaluation pipeline in `evaluation/pipeline_evaluator.py`:
+  - OpenRouter via OpenAI SDK (base_url = https://openrouter.ai/api/v1)
+  - default model = AVAILABLE_MODELS[DEFAULT_MODEL_KEY] (Gemini 2.5 Flash)
+  - caller may override per request via `model_key` arg
 """
 import re
-from google import genai
+import time
 
-from ..config import GEMINI_API_KEY, GEMINI_MODEL
+from openai import OpenAI
+
+from ..config import (
+    AVAILABLE_MODELS,
+    DEFAULT_MODEL_KEY,
+    OPENROUTER_API_KEY,
+    OPENROUTER_BASE_URL,
+)
 
 
-client = genai.Client(api_key=GEMINI_API_KEY)
+_client: OpenAI | None = None
+
+
+def _get_client() -> OpenAI:
+    global _client
+    if _client is None:
+        if not OPENROUTER_API_KEY:
+            raise RuntimeError("OPENROUTER_API_KEY is not set in backend/.env")
+        _client = OpenAI(api_key=OPENROUTER_API_KEY, base_url=OPENROUTER_BASE_URL)
+    return _client
+
+
+def resolve_model(model_key: str | None) -> tuple[str, str]:
+    """Map a short UI key (or None) to the OpenRouter model id.
+
+    Returns (openrouter_model_id, resolved_short_key).
+    Falls back to the default if the key is unknown.
+    """
+    key = model_key or DEFAULT_MODEL_KEY
+    if key not in AVAILABLE_MODELS:
+        key = DEFAULT_MODEL_KEY
+    return AVAILABLE_MODELS[key]["id"], key
 
 
 def _extract_sparql(text: str) -> str:
-    """
-    Extract a SPARQL query from LLM output.
-    Handles cases where the model wraps it in code fences or adds explanation.
-    """
-    # Try to extract from code fences first
+    """Pull a SPARQL query out of arbitrary LLM output."""
     code_block = re.search(r"```(?:sparql)?\s*\n?(.*?)```", text, re.DOTALL | re.IGNORECASE)
     if code_block:
         return code_block.group(1).strip()
 
-    # Look for content starting with PREFIX or SELECT/ASK/CONSTRUCT
     lines = text.strip().splitlines()
-    sparql_lines = []
+    sparql_lines: list[str] = []
     capturing = False
-
     for line in lines:
         stripped = line.strip()
         if stripped.upper().startswith(("PREFIX", "SELECT", "ASK", "CONSTRUCT", "DESCRIBE")):
             capturing = True
         if capturing:
             sparql_lines.append(line)
-
     if sparql_lines:
         return "\n".join(sparql_lines).strip()
-
-    # Fallback: return the whole text (hope for the best)
     return text.strip()
 
 
 def generate_sparql(
     system_prompt: str,
     query_prompt: str,
+    model_key: str | None = None,
 ) -> str:
-    """
-    Call Gemini to generate a SPARQL query.
+    """Call the chosen LLM (via OpenRouter) to produce SPARQL.
 
     Args:
         system_prompt: The static ontology-aware system prompt.
-        query_prompt: The per-query prompt with grounded IRIs and question.
-
-    Returns:
-        The extracted SPARQL query string.
+        query_prompt: The per-question prompt (includes grounded IRIs).
+        model_key:    Optional short key from AVAILABLE_MODELS; None → default.
     """
-    import time
+    model_id, _ = resolve_model(model_key)
+    client = _get_client()
+
+    # GPT-5 reasoning models reject `max_tokens` and `temperature != 1`.
+    is_gpt5 = "gpt-5" in model_id
+
     for attempt in range(3):
         try:
-            response = client.models.generate_content(
-                model=GEMINI_MODEL,
-                contents=[
-                    {"role": "user", "parts": [{"text": system_prompt}]},
-                    {"role": "model", "parts": [{"text": "I understand the GEMR-KG ontology schema and rules. I will generate valid SPARQL queries using only the provided IRIs and patterns. Send me a question."}]},
-                    {"role": "user", "parts": [{"text": query_prompt}]},
+            kwargs: dict = {
+                "model": model_id,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query_prompt},
                 ],
-                config={
-                    "temperature": 0.1,  # Low temperature for deterministic structured output
-                    "max_output_tokens": 2048,
-                },
-            )
-            raw_text = response.text
-            return _extract_sparql(raw_text)
-        except Exception as e:
-            error_str = str(e)
-            if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str or "503" in error_str or "UNAVAILABLE" in error_str:
-                wait = 10 * (attempt + 1)
-                print(f"  [Generator] API busy/rate-limited, waiting {wait}s...")
-                time.sleep(wait)
+            }
+            if is_gpt5:
+                kwargs["max_completion_tokens"] = 6000
             else:
-                raise
-    raise RuntimeError("SPARQL generation failed after 3 attempts")
+                kwargs["temperature"] = 0.1
+                kwargs["max_tokens"] = 2048
+            response = client.chat.completions.create(**kwargs)
+            raw = response.choices[0].message.content or ""
+            return _extract_sparql(raw)
+        except Exception as e:
+            err = str(e)
+            if any(x in err for x in ("429", "rate_limit", "RESOURCE_EXHAUSTED", "529", "503")):
+                wait = 10 * (attempt + 1)
+                print(f"  [Generator] rate-limited on {model_id}, waiting {wait}s...")
+                time.sleep(wait)
+                continue
+            raise
+    raise RuntimeError(f"SPARQL generation failed after 3 attempts ({model_id})")
