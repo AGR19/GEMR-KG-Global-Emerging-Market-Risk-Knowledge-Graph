@@ -1,12 +1,16 @@
 """
 Answer Generator — produces a natural-language summary of GraphDB results.
 
-Uses the same OpenRouter client / model registry as the SPARQL generator so
-a single `model_key` controls the whole pipeline.
+Uses LiteLLM for the same provider-agnostic access as the SPARQL generator.
 """
+import logging
 import time
 
-from .sparql_generator import _get_client, resolve_model
+import litellm
+
+from .sparql_generator import resolve_model
+
+logger = logging.getLogger(__name__)
 
 
 def generate_natural_language_answer(
@@ -56,27 +60,28 @@ INSTRUCTIONS:
 5. DO NOT explain the graph database, the SPARQL query, or the pipeline."""
 
     model_id, _ = resolve_model(model_key)
-    client = _get_client()
-    is_gpt5 = "gpt-5" in model_id
+    is_reasoning = any(x in model_id for x in ("o1", "o3", "gpt-5"))
 
     for attempt in range(3):
         try:
             kwargs: dict = {
                 "model": model_id,
                 "messages": [{"role": "user", "content": prompt}],
+                "drop_params": True,
             }
-            if is_gpt5:
+            if is_reasoning:
                 kwargs["max_completion_tokens"] = 2000
             else:
                 kwargs["temperature"] = 0.3
                 kwargs["max_tokens"] = 800
-            response = client.chat.completions.create(**kwargs)
+
+            response = litellm.completion(**kwargs)
             return response.choices[0].message.content or ""
         except Exception as e:
             err = str(e)
             if any(x in err for x in ("429", "rate_limit", "RESOURCE_EXHAUSTED", "529", "503")):
                 wait = 10 * (attempt + 1)
-                print(f"  [Answer Gen] rate-limited on {model_id}, waiting {wait}s...")
+                logger.warning("Rate-limited on %s, retrying in %ds (attempt %d/3)", model_id, wait, attempt + 1)
                 time.sleep(wait)
                 continue
             raise

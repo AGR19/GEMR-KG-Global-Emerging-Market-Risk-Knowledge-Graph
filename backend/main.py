@@ -135,7 +135,7 @@ async def list_models():
         "default": DEFAULT_MODEL_KEY,
         "models": [
             {"key": key, "display_name": info["display_name"],
-             "openrouter_id": info["id"], "notes": info["notes"]}
+             "model_id": info["id"], "notes": info["notes"]}
             for key, info in AVAILABLE_MODELS.items()
         ],
     }
