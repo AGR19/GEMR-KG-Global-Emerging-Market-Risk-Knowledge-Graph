@@ -1,0 +1,9 @@
+# Core dependencies for GEMR-KG NL→SPARQL Pipeline
+litellm>=1.40.0            # Unified LLM provider interface (OpenAI, Anthropic, Gemini, etc.)
+google-genai==1.73.1       # Gemini embeddings (ontology grounding cache)
+fastapi==0.135.3           # API server
+uvicorn==0.44.0            # ASGI server
+requests==2.33.1           # HTTP client (GraphDB queries)
+pydantic==2.13.1           # Data validation
+numpy>=1.26.0              # Cosine similarity for IRI grounding
+python-dotenv>=1.0.0       # .env file loading

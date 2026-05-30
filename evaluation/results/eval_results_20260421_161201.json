@@ -1,0 +1,2157 @@
+{
+  "run_timestamp": "20260421_161201",
+  "summaries": [
+    {
+      "condition": "claude",
+      "n": 20,
+      "syntactic_validity_pct": 100.0,
+      "execution_accuracy_pct": 100.0,
+      "empty_result_rate_pct": 100.0,
+      "hallucination_total": 0,
+      "avg_attempts": 1.0,
+      "avg_elapsed_seconds": 2.14,
+      "tier_breakdown": {
+        "simple": {
+          "n": 8,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 100.0,
+          "empty_result_rate_pct": 100.0
+        },
+        "medium": {
+          "n": 7,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 100.0,
+          "empty_result_rate_pct": 100.0
+        },
+        "complex": {
+          "n": 5,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 100.0,
+          "empty_result_rate_pct": 100.0
+        }
+      }
+    },
+    {
+      "condition": "gpt4o",
+      "n": 20,
+      "syntactic_validity_pct": 100.0,
+      "execution_accuracy_pct": 95.0,
+      "empty_result_rate_pct": 65.0,
+      "hallucination_total": 0,
+      "avg_attempts": 1.0,
+      "avg_elapsed_seconds": 3.56,
+      "tier_breakdown": {
+        "simple": {
+          "n": 8,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 100.0,
+          "empty_result_rate_pct": 87.5
+        },
+        "medium": {
+          "n": 7,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 100.0,
+          "empty_result_rate_pct": 57.1
+        },
+        "complex": {
+          "n": 5,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 80.0,
+          "empty_result_rate_pct": 40.0
+        }
+      }
+    },
+    {
+      "condition": "pipeline",
+      "n": 20,
+      "syntactic_validity_pct": 100.0,
+      "execution_accuracy_pct": 40.0,
+      "empty_result_rate_pct": 0.0,
+      "hallucination_total": 1,
+      "avg_attempts": 2.3,
+      "avg_elapsed_seconds": 5.21,
+      "tier_breakdown": {
+        "simple": {
+          "n": 8,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 50.0,
+          "empty_result_rate_pct": 0.0
+        },
+        "medium": {
+          "n": 7,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 42.9,
+          "empty_result_rate_pct": 0.0
+        },
+        "complex": {
+          "n": 5,
+          "syntactic_validity_pct": 100.0,
+          "execution_accuracy_pct": 20.0,
+          "empty_result_rate_pct": 0.0
+        }
+      }
+    }
+  ],
+  "per_question_results": [
+    {
+      "condition": "claude",
+      "question_id": "S01",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Poland in 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 4.53,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?totalRiskScore\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year ;\n    gemr:totalRiskScore ?totalRiskScore .\n  ?country gemr:countryName \"Poland\" .\n  ?year gemr:yearValue \"2023\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S02",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the governance score for Brazil in 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.32,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?governanceScore\nWHERE {\n  ?riskScore gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName \"Brazil\" .\n  ?year gemr:yearValue \"2020\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S03",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the private default rate for China in 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.81,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?observationValue\nWHERE {\n  ?observation a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year ;\n    gemr:observationType gemr:PrivateDefaultRate ;\n    gemr:observationValue ?observationValue .\n  \n  ?country gemr:countryName \"China\" .\n  ?year gemr:yearValue \"2015\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S04",
+      "tier": "simple",
+      "result_type": "list",
+      "question": "List all countries that have risk score data in 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.52,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2023\" .\n}\nORDER BY ?countryName",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S05",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the economic health score for Mexico in 2019?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.28,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?economicHealthScore\nWHERE {\n  ?riskScore gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:economicHealthScore ?economicHealthScore .\n  ?country gemr:countryName \"Mexico\" .\n  ?year gemr:yearValue \"2019\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S06",
+      "tier": "simple",
+      "result_type": "temporal_series",
+      "question": "Show me the private default rates for Brazil from 2002 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.85,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?privateDefaultRate\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode ;\n    gemr:observationType gemr:PrivateDefaultRate ;\n    gemr:observationValue ?privateDefaultRate .\n  \n  ?country gemr:countryName \"Brazil\" .\n  ?yearNode gemr:yearValue ?year .\n  \n  FILTER(xsd:integer(?year) >= 2002 && xsd:integer(?year) <= 2023)\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S07",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Thailand in 2010?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.49,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?totalRiskScore\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year ;\n    gemr:totalRiskScore ?totalRiskScore .\n  ?country gemr:countryName \"Thailand\" .\n  ?year gemr:yearValue \"2010\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "S08",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "Which country had the highest total risk score in 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.5,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName ?totalRiskScore\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n    gemr:totalRiskScore ?totalRiskScore ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2023\" .\n}\nORDER BY DESC(?totalRiskScore)\nLIMIT 1",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M01",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What is the GDP growth rate for each country year over year from 2010 to 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.16,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName ?year ?gdpGrowthRate\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n    gemr:observationType gemr:GDPGrowthRate ;\n    gemr:observationValue ?gdpGrowthRate ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode .\n  \n  ?country gemr:countryName ?countryName .\n  ?yearNode gemr:yearValue ?year .\n  \n  FILTER (?year >= \"2010\"^^xsd:gYear && ?year <= \"2020\"^^xsd:gYear)\n}\nORDER BY ?countryName ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M02",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did the governance score for Poland change between 2005 and 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.78,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?governanceScore\nWHERE {\n  ?riskScore gemr:governanceScore ?governanceScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?yearNode .\n  ?country gemr:countryName \"Poland\" .\n  ?yearNode gemr:yearValue ?year .\n  FILTER (?year = \"2005\" || ?year = \"2023\")\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M03",
+      "tier": "medium",
+      "result_type": "comparison",
+      "question": "Did stock market performance in China in 2008 predict default rates in 2009?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.19,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?stockMarketPerf2008 ?defaultRate2009\nWHERE {\n  ?observation2008 a gemr:Observation ;\n    gemr:hasCountry ?country2008 ;\n    gemr:hasYear ?year2008 ;\n    gemr:observationType gemr:StockMarketPerformance ;\n    gemr:observationValue ?stockMarketPerf2008 .\n  \n  ?country2008 gemr:countryName \"China\" .\n  ?year2008 gemr:yearValue \"2008\" .\n  \n  ?observation2009 a gemr:Observation ;\n    gemr:hasCountry ?country2009 ;\n    gemr:hasYear ?year2009 ;\n    gemr:observationType gemr:DefaultRate ;\n    gemr:observationValue ?defaultRate2009 .\n  \n  ?country2009 gemr:countryName \"China\" .\n  ?year2009 gemr:yearValue \"2009\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M04",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did governance scores in Brazil change between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.02,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?governanceScore\nWHERE {\n  ?riskScore gemr:hasCountry ?country ;\n             gemr:hasYear ?yearNode ;\n             gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName \"Brazil\" .\n  ?yearNode gemr:yearValue ?year .\n  FILTER (?year IN (\"2015\", \"2016\", \"2017\", \"2018\", \"2019\", \"2020\"))\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M05",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "Show me how private default rates and risk scores for the Philippines co-evolved from 2010 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.83,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?privateDefaultRate ?totalRiskScore ?governanceScore ?economicHealthScore ?externalVulnerabilityScore ?contagionRiskScore\nWHERE {\n  ?country gemr:countryName \"Philippines\" .\n  \n  ?riskScoreObs rdf:type gemr:RiskScore ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode ;\n    gemr:totalRiskScore ?totalRiskScore ;\n    gemr:governanceScore ?governanceScore ;\n    gemr:economicHealthScore ?economicHealthScore ;\n    gemr:externalVulnerabilityScore ?externalVulnerabilityScore ;\n    gemr:contagionRiskScore ?contagionRiskScore .\n  \n  ?yearNode gemr:yearValue ?year .\n  \n  ?defaultObs rdf:type gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode ;\n    gemr:observationType \"PrivateDefaultRate\" ;\n    gemr:observationValue ?privateDefaultRate .\n  \n  FILTER(xsd:integer(?year) >= 2010 && xsd:integer(?year) <= 2023)\n}\nORDER BY ASC(?year)",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M06",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What were the annual total reserves for Mexico from 2005 to 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.14,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?reserveValue\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode ;\n    gemr:observationValue ?reserveValue ;\n    gemr:observationType gemr:TotalReserves .\n  \n  ?country gemr:countryName \"Mexico\" .\n  \n  ?yearNode gemr:yearValue ?year .\n  \n  FILTER(xsd:integer(?year) >= 2005 && xsd:integer(?year) <= 2015)\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "M07",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did exchange rates change in Thailand between 2008 and 2012?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.81,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?exchangeRate\nWHERE {\n  ?observation a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?yearNode ;\n    gemr:observationType gemr:ExchangeRate ;\n    gemr:observationValue ?exchangeRate .\n  \n  ?country gemr:countryName \"Thailand\" .\n  \n  ?yearNode gemr:yearValue ?year .\n  \n  FILTER (?year >= \"2008\" && ?year <= \"2012\")\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "C01",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had private default rates above 5% between 2010 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.92,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?observation a gemr:Observation ;\n    gemr:observationType gemr:PrivateDefaultRate ;\n    gemr:observationValue ?value ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year .\n  \n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  \n  FILTER (?value > 5.0)\n  FILTER (xsd:integer(?yearValue) >= 2010 && xsd:integer(?yearValue) <= 2020)\n}\nORDER BY ?countryName",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "C02",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Rank all countries by their average total risk score from 2015 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.81,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName (AVG(?score) AS ?avgTotalRiskScore)\nWHERE {\n  ?riskScore gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:totalRiskScore ?score .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(?yearValue >= \"2015\" && ?yearValue <= \"2023\")\n}\nGROUP BY ?countryName\nORDER BY DESC(?avgTotalRiskScore)",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "C03",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "For each country, what year had the highest private default rate, and what was that rate?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.23,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName ?yearValue ?maxDefaultRate\nWHERE {\n  ?observation a gemr:Observation ;\n    gemr:observationType gemr:PrivateDefaultRate ;\n    gemr:observationValue ?defaultRate ;\n    gemr:hasCountry ?country ;\n    gemr:hasYear ?year .\n  \n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  \n  {\n    SELECT ?country (MAX(?rate) as ?maxDefaultRate)\n    WHERE {\n      ?obs a gemr:Observation ;\n        gemr:observationType gemr:PrivateDefaultRate ;\n        gemr:observationValue ?rate ;\n        gemr:hasCountry ?country .\n    }\n    GROUP BY ?country\n  }\n  \n  FILTER(?defaultRate = ?maxDefaultRate)\n}\nORDER BY ?countryName",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "C04",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had improving governance scores AND declining private default rates between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.15,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?country ?governance2015 ?governance2020 ?defaultRate2015 ?defaultRate2020\nWHERE {\n  ?riskScore2015 gemr:hasCountry ?countryNode ;\n                 gemr:hasYear ?year2015 ;\n                 gemr:governanceScore ?governance2015 .\n  ?year2015 gemr:yearValue \"2015\" .\n  \n  ?riskScore2020 gemr:hasCountry ?countryNode ;\n                 gemr:hasYear ?year2020 ;\n                 gemr:governanceScore ?governance2020 .\n  ?year2020 gemr:yearValue \"2020\" .\n  \n  ?countryNode gemr:countryName ?country .\n  FILTER(?country IN (\"Brazil\", \"China\", \"Mexico\", \"Philippines\", \"Poland\", \"Thailand\"))\n  \n  ?obs2015 gemr:hasCountry ?countryNode ;\n           gemr:hasYear ?year2015 ;\n           rdf:type gemr:Observation ;\n           gemr:observationType \"PrivateDefaultRate\" ;\n           gemr:observationValue ?defaultRate2015 .\n  \n  ?obs2020 gemr:hasCountry ?countryNode ;\n           gemr:hasYear ?year2020 ;\n           rdf:type gemr:Observation ;\n           gemr:observationType \"PrivateDefaultRate\" ;\n           gemr:observationValue ?defaultRate2020 .\n  \n  FILTER(?governance2020 > ?governance2015)\n  FILTER(?defaultRate2020 < ?defaultRate2015)\n}\nORDER BY ?country",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "claude",
+      "question_id": "C05",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Show me all economic health scores and governance scores for all countries in 2018, ordered by economic health score descending.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.42,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName ?economicHealthScore ?governanceScore\nWHERE {\n  ?riskScore gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:economicHealthScore ?economicHealthScore ;\n             gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2018\" .\n}\nORDER BY DESC(?economicHealthScore)",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S01",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Poland in 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 5.97,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?totalRiskScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName \"Poland\" .\n  ?year gemr:yearValue \"2023\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S02",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the governance score for Brazil in 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.5,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?governanceScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:governanceScore ?governanceScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName \"Brazil\" .\n  ?year gemr:yearValue \"2020\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S03",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the private default rate for China in 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.04,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?observationValue\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:observationValue ?observationValue ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year .\n  ?country gemr:countryName \"China\" .\n  ?year gemr:yearValue \"2015\" .\n  FILTER EXISTS {\n    ?observation rdfs:label \"Private Default Rate\"\n  }\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S04",
+      "tier": "simple",
+      "result_type": "list",
+      "question": "List all countries that have risk score data in 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.82,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2023\"^^xsd:string .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S05",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the economic health score for Mexico in 2019?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.59,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?economicHealthScore\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n             gemr:economicHealthScore ?economicHealthScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName \"Mexico\" .\n  ?year gemr:yearValue \"2019\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S06",
+      "tier": "simple",
+      "result_type": "temporal_series",
+      "question": "Show me the private default rates for Brazil from 2002 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 1773,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.65,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?defaultRate\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year ;\n               gemr:observationValue ?defaultRate .\n  ?country gemr:countryName \"Brazil\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2002 && xsd:integer(?yearValue) <= 2023)\n} \nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S07",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Thailand in 2010?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.78,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?totalRiskScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName \"Thailand\" .\n  ?year gemr:yearValue \"2010\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "S08",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "Which country had the highest total risk score in 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.49,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?countryName ?totalRiskScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2023\"^^xsd:string .\n}\nORDER BY DESC(?totalRiskScore)\nLIMIT 1",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M01",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What is the GDP growth rate for each country year over year from 2010 to 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.12,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?year ?gdpGrowthRate\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year ;\n               gemr:observationValue ?gdpGrowthRate .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(?yearValue >= \"2010\"^^xsd:gYear && ?yearValue <= \"2020\"^^xsd:gYear)\n  FILTER EXISTS {\n    ?observation rdf:type gemr:GDPGrowthRate .\n  }\n}\nORDER BY ?countryName ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M02",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did the governance score for Poland change between 2005 and 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 1,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 13.01,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?governanceScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:governanceScore ?governanceScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName \"Poland\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2005 && xsd:integer(?yearValue) <= 2023)\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M03",
+      "tier": "medium",
+      "result_type": "comparison",
+      "question": "Did stock market performance in China in 2008 predict default rates in 2009?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.45,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?stockMarketPerformance2008 ?defaultRate2009\nWHERE {\n  ?observation2008 rdf:type gemr:Observation ;\n                   gemr:hasCountry ?country ;\n                   gemr:hasYear ?year2008 ;\n                   gemr:observationValue ?stockMarketPerformance2008 .\n  ?country gemr:countryName \"China\" .\n  ?year2008 gemr:yearValue \"2008\" .\n\n  ?observation2009 rdf:type gemr:Observation ;\n                   gemr:hasCountry ?country ;\n                   gemr:hasYear ?year2009 ;\n                   gemr:observationValue ?defaultRate2009 .\n  ?year2009 gemr:yearValue \"2009\" .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M04",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did governance scores in Brazil change between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 1.58,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n\nSELECT ?year ?governanceScore\nWHERE {\n  ?riskScore a gemr:RiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName \"Brazil\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2015 && xsd:integer(?yearValue) <= 2020)\n}\nORDER BY ?yearValue",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M05",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "Show me how private default rates and risk scores for the Philippines co-evolved from 2010 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.98,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?privateDefaultRate ?totalRiskScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:totalRiskScore ?totalRiskScore .\n  ?country gemr:countryName \"Philippines\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2010 && xsd:integer(?yearValue) <= 2023)\n\n  OPTIONAL {\n    ?observation rdf:type gemr:Observation ;\n                 gemr:hasCountry ?country ;\n                 gemr:hasYear ?year ;\n                 gemr:observationValue ?privateDefaultRate .\n    ?observation rdfs:label \"Private Default Rate\" .\n  }\n}\nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M06",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What were the annual total reserves for Mexico from 2005 to 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 891,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.19,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?totalReserves\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year ;\n               gemr:observationValue ?totalReserves .\n  ?country gemr:countryName \"Mexico\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2005 && xsd:integer(?yearValue) <= 2015)\n} \nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "M07",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did exchange rates change in Thailand between 2008 and 2012?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 395,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.61,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?exchangeRate\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year ;\n               gemr:observationValue ?exchangeRate .\n  ?country gemr:countryName \"Thailand\" .\n  ?year gemr:yearValue ?yearValue .\n  FILTER (?yearValue >= \"2008\"^^xsd:gYear && ?yearValue <= \"2012\"^^xsd:gYear)\n} \nORDER BY ?year",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "C01",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had private default rates above 5% between 2010 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 8,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.49,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?observation rdf:type gemr:Observation ;\n               gemr:observationValue ?value ;\n               gemr:hasCountry ?country ;\n               gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(?value > 5)\n  FILTER(xsd:integer(?yearValue) >= 2010 && xsd:integer(?yearValue) <= 2020)\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "C02",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Rank all countries by their average total risk score from 2015 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 2,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.0,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName (AVG(?totalRiskScore) AS ?averageTotalRiskScore)\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue ?yearValue .\n  FILTER(xsd:integer(?yearValue) >= 2015 && xsd:integer(?yearValue) <= 2023)\n}\nGROUP BY ?countryName\nORDER BY DESC(?averageTotalRiskScore)",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "C03",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "For each country, what year had the highest private default rate, and what was that rate?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.79,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?yearValue ?maxDefaultRate\nWHERE {\n  {\n    SELECT ?country ?maxDefaultRate\n    WHERE {\n      ?obs rdf:type gemr:Observation ;\n           gemr:observationValue ?defaultRate ;\n           gemr:hasCountry ?country ;\n           gemr:hasYear ?year .\n      ?country gemr:countryName ?countryName .\n      ?year gemr:yearValue ?yearValue .\n      FILTER EXISTS {\n        ?obs rdf:type gemr:PrivateDefaultRateObservation .\n      }\n    }\n    GROUP BY ?country\n    HAVING(MAX(?defaultRate) AS ?maxDefaultRate)\n  }\n  ?obs rdf:type gemr:Observation ;\n       gemr:observationValue ?maxDefaultRate ;\n       gemr:hasCountry ?country ;\n       gemr:hasYear ?year .\n  ?year gemr:yearValue ?yearValue .\n  ?country gemr:countryName ?countryName .\n}",
+      "error": "HTTP 400: MALFORMED QUERY: Encountered \" \"as\" \"AS \"\" at line 22, column 30.\nWas expecting one of:\n    \")\" ...\n    \"=\" ...\n    \"!=\" ...\n    \">\" ...\n    \"<\" ...\n    \"<=\" ...\n    \">=\" ...\n    \"||\" ...\n    \"&&\" ...\n    \"+\" ...\n    \"-\" ...\n    \"*\" ...\n    \"/\" ...\n    \"not\" ...\n    \"in\" ...\n    <INTEGER_POSITIVE> ...\n    <INTEGER_NEGATIVE> ...\n    <DECIMAL_POSITIVE> ...\n    <DECIMAL_NEGATIVE> ...\n    <DOUBLE_POSITIVE> ...\n    <DOUBLE_NEGATIVE> ...\n    ",
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "C04",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had improving governance scores AND declining private default rates between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.88,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName WHERE {\n  ?riskScore2015 rdf:type gemr:RiskScore ;\n                 gemr:hasCountry ?country ;\n                 gemr:hasYear ?year2015 ;\n                 gemr:governanceScore ?governanceScore2015 .\n  ?year2015 gemr:yearValue \"2015\"^^xsd:string .\n\n  ?riskScore2020 rdf:type gemr:RiskScore ;\n                 gemr:hasCountry ?country ;\n                 gemr:hasYear ?year2020 ;\n                 gemr:governanceScore ?governanceScore2020 .\n  ?year2020 gemr:yearValue \"2020\"^^xsd:string .\n\n  FILTER(?governanceScore2020 > ?governanceScore2015)\n\n  ?defaultRate2015 rdf:type gemr:Observation ;\n                   gemr:hasCountry ?country ;\n                   gemr:hasYear ?year2015 ;\n                   gemr:observationValue ?defaultRate2015 .\n\n  ?defaultRate2020 rdf:type gemr:Observation ;\n                   gemr:hasCountry ?country ;\n                   gemr:hasYear ?year2020 ;\n                   gemr:observationValue ?defaultRate2020 .\n\n  FILTER(?defaultRate2020 < ?defaultRate2015)\n\n  ?country gemr:countryName ?countryName .\n}",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "gpt4o",
+      "question_id": "C05",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Show me all economic health scores and governance scores for all countries in 2018, ordered by economic health score descending.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": true,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.24,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?economicHealthScore ?governanceScore\nWHERE {\n  ?riskScore rdf:type gemr:RiskScore ;\n             gemr:hasCountry ?country ;\n             gemr:hasYear ?year ;\n             gemr:economicHealthScore ?economicHealthScore ;\n             gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName ?countryName .\n  ?year gemr:yearValue \"2018\"^^xsd:string .\n}\nORDER BY DESC(?economicHealthScore)",
+      "error": null,
+      "initial_sparql": null,
+      "grounded_iris": null
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S01",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Poland in 2023?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 1,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.59,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?total WHERE {\n  ?country gemr:countryName \"Poland\" .\n  ?rs gemr:hasCountry ?country .\n  ?rs gemr:totalRiskScore ?total .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue \"2023\"^^xsd:gYear .\n}\nORDER BY ?total\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?total WHERE {\n  ?country gemr:countryName \"Poland\" .\n  ?rs gemr:hasCountry ?country .\n  ?rs gemr:totalRiskScore ?total .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue \"2023\"^^xsd:gYear .\n}\nORDER BY ?total\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#totalRiskScore",
+          "label": "total risk score",
+          "type": "property",
+          "score": 0.6662
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6596
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#contagionRiskScore",
+          "label": "contagion risk score",
+          "type": "property",
+          "score": 0.6163
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6151
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.6047
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RESERVES_TOTAL",
+          "label": "RESERVES TOTAL",
+          "type": "indicator",
+          "score": 0.5999
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#riskTier",
+          "label": "risk tier",
+          "type": "property",
+          "score": 0.5988
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.5984
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S02",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the governance score for Brazil in 2020?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 4.81,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?gov WHERE {\n  ?country gemr:countryName \"Brazil\" .\n  ?rs gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity ;\n      gemr:governanceScore ?gov .\n  ?yearEntity gemr:yearValue \"2020\"^^xsd:gYear .\n}\nORDER BY ?gov\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?gov WHERE {\n  ?country gemr:countryName \"Brazil\" .\n  ?rs gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity ;\n      gemr:governanceScore ?gov .\n  ?yearEntity gemr:yearValue \"2020\"^^xsd:gYear .\n}\nORDER BY ?gov\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6944
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6567
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.5938
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.5859
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.5731
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#PoliticalStability",
+          "label": "PoliticalStability",
+          "type": "indicator",
+          "score": 0.5693
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.5691
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.5624
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S03",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the private default rate for China in 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 2,
+      "hallucination_count": 0,
+      "attempts": 2,
+      "elapsed_seconds": 4.23,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?value\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:Historical_private_default_rates ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?value .\n  ?country gemr:countryName \"China\" .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (STR(?year) = \"2015\")\n}\nORDER BY ?value\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?value\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator ?indicator ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?value .\n  ?country gemr:countryName \"China\" .\n  ?yearEntity gemr:yearValue \"2015\"^^xsd:gYear .\n  ?indicator rdfs:label \"Historical private default rates\" .\n}\nORDER BY ?value\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.7467
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.7042
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6191
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_OFFICIAL",
+          "label": "XRATE OFFICIAL",
+          "type": "indicator",
+          "score": 0.5749
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Official_exchange_rate_LCU_per_USD",
+          "label": "Official exchange rate LCU per USD",
+          "type": "indicator",
+          "score": 0.5728
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_old_LCU_per_USD",
+          "label": "Exchange rate old LCU per USD",
+          "type": "indicator",
+          "score": 0.5686
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_OLD_LCU_USD",
+          "label": "XRATE OLD LCU USD",
+          "type": "indicator",
+          "score": 0.5655
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_new_LCU_per_USD",
+          "label": "Exchange rate new LCU per USD",
+          "type": "indicator",
+          "score": 0.5648
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S04",
+      "tier": "simple",
+      "result_type": "list",
+      "question": "List all countries that have risk score data in 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 2,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.46,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?country a gemr:Country .\n  ?country gemr:countryName ?countryName .\n  ?rs gemr:hasCountry ?country .\n  ?rs a gemr:RiskScore .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue \"2023\"^^xsd:gYear .\n}\nORDER BY ?countryName\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?country a gemr:Country .\n  ?country gemr:countryName ?countryName .\n  ?rs gemr:hasCountry ?country .\n  ?rs a gemr:RiskScore .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue \"2023\"^^xsd:gYear .\n}\nORDER BY ?countryName\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.7805
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#totalRiskScore",
+          "label": "total risk score",
+          "type": "property",
+          "score": 0.6816
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6812
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#contagionRiskScore",
+          "label": "contagion risk score",
+          "type": "property",
+          "score": 0.6726
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.6723
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#externalVulnerabilityScore",
+          "label": "external vulnerability score",
+          "type": "property",
+          "score": 0.668
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#riskTier",
+          "label": "risk tier",
+          "type": "property",
+          "score": 0.6661
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6656
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S05",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the economic health score for Mexico in 2019?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.13,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?economicHealthScore WHERE {\n  ?country gemr:countryName \"Mexico\" .\n  ?rs gemr:hasCountry ?country .\n  ?rs gemr:hasYear ?year .\n  ?year gemr:yearValue \"2019\"^^xsd:gYear .\n  ?rs gemr:economicHealthScore ?economicHealthScore .\n}\nORDER BY ?economicHealthScore\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?economicHealthScore WHERE {\n  ?country gemr:countryName \"Mexico\" .\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:hasYear ?year .\n  ?year gemr:yearValue \"2019\"^^xsd:gYear .\n  ?riskScore gemr:economicHealthScore ?economicHealthScore .\n}\nORDER BY ?economicHealthScore\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.6956
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.618
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6042
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.5974
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.5973
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RegulatoryQuality",
+          "label": "RegulatoryQuality",
+          "type": "indicator",
+          "score": 0.5898
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_constant_2010_US",
+          "label": "GDP at market prices constant 2010 US",
+          "type": "indicator",
+          "score": 0.5889
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_current_US",
+          "label": "GDP at market prices current US",
+          "type": "indicator",
+          "score": 0.5877
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S06",
+      "tier": "simple",
+      "result_type": "temporal_series",
+      "question": "Show me the private default rates for Brazil from 2002 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 22,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.87,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?privateDefaultRate\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:Historical_private_default_rates ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?privateDefaultRate .\n  ?country gemr:countryName \"Brazil\" .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2002 && ?year <= 2023)\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?privateDefaultRate\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:Historical_private_default_rates ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?privateDefaultRate .\n  ?country gemr:countryName \"Brazil\" .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2002 && ?year <= 2023)\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.7553
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.7157
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6216
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Official_exchange_rate_LCU_per_USD",
+          "label": "Official exchange rate LCU per USD",
+          "type": "indicator",
+          "score": 0.5857
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.582
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.5813
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_old_LCU_per_USD",
+          "label": "Exchange rate old LCU per USD",
+          "type": "indicator",
+          "score": 0.5767
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_new_LCU_per_USD",
+          "label": "Exchange rate new LCU per USD",
+          "type": "indicator",
+          "score": 0.5748
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S07",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "What is the total risk score for Thailand in 2010?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 6.23,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?total WHERE {\n  ?country gemr:countryName \"Thailand\" .\n  ?rs gemr:hasCountry ?country .\n  ?rs gemr:totalRiskScore ?total .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (STR(?year) = \"2010\")\n}\nORDER BY ?total\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?total WHERE {\n  ?country gemr:countryName \"Thailand\" .\n  ?rs gemr:hasCountry ?country .\n  ?rs gemr:totalRiskScore ?total .\n  ?rs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue \"2010\"^^xsd:gYear .\n}\nORDER BY ?total\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#totalRiskScore",
+          "label": "total risk score",
+          "type": "property",
+          "score": 0.6609
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6567
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_USD",
+          "label": "GDP CONST 2010 USD",
+          "type": "indicator",
+          "score": 0.6142
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_LCU",
+          "label": "GDP CONST 2010 LCU",
+          "type": "indicator",
+          "score": 0.6101
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Total_Reserves",
+          "label": "Total Reserves",
+          "type": "indicator",
+          "score": 0.6077
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#contagionRiskScore",
+          "label": "contagion risk score",
+          "type": "property",
+          "score": 0.6056
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#riskTier",
+          "label": "risk tier",
+          "type": "property",
+          "score": 0.6051
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.604
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "S08",
+      "tier": "simple",
+      "result_type": "single_value",
+      "question": "Which country had the highest total risk score in 2023?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.31,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?totalRiskScore\nWHERE {\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:totalRiskScore ?totalRiskScore .\n  ?riskScore gemr:hasYear ?year .\n  ?year gemr:yearValue ?yearValue .\n  FILTER (STR(?yearValue) = \"2023\")\n  ?country gemr:countryName ?countryName .\n}\nORDER BY DESC(?totalRiskScore)\nLIMIT 1",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?totalRiskScore\nWHERE {\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:totalRiskScore ?totalRiskScore .\n  ?riskScore gemr:hasYear ?year .\n  ?year gemr:yearValue \"2023\"^^xsd:gYear .\n  ?country gemr:countryName ?countryName .\n}\nORDER BY DESC(?totalRiskScore)\nLIMIT 1",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.7128
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#totalRiskScore",
+          "label": "total risk score",
+          "type": "property",
+          "score": 0.6969
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Total_Reserves",
+          "label": "Total Reserves",
+          "type": "indicator",
+          "score": 0.6339
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#contagionRiskScore",
+          "label": "contagion risk score",
+          "type": "property",
+          "score": 0.6331
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6322
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RESERVES_TOTAL",
+          "label": "RESERVES TOTAL",
+          "type": "indicator",
+          "score": 0.6302
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#externalVulnerabilityScore",
+          "label": "external vulnerability score",
+          "type": "property",
+          "score": 0.6239
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.6199
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M01",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What is the GDP growth rate for each country year over year from 2010 to 2020?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 8.16,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?year ?gdpValue ?nextYear ?nextGdpValue ((?nextGdpValue - ?gdpValue) / ?gdpValue AS ?growthRate)\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:GDP ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?gdpValue .\n  ?country gemr:countryName ?countryName .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (xsd:integer(STR(?year)) >= 2010 && xsd:integer(STR(?year)) <= 2020)\n\n  ?nextYearEntity gemr:yearValue ?nextYear .\n  ?nextYearObs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:GDP ;\n       gemr:hasYear ?nextYearEntity ;\n       gemr:observationValue ?nextGdpValue .\n  FILTER (?country gemr:hasObservation ?nextYearObs) .\n\n  BIND(xsd:integer(STR(?year)) AS ?yearInt)\n  BIND(xsd:integer(STR(?nextYear)) AS ?nextYearInt)\n  FILTER (?nextYearInt = ?yearInt + 1)\n}\nORDER BY ?countryName ?year\nLIMIT 100",
+      "error": "HTTP 400: MALFORMED QUERY: Encountered \" <PNAME_LN> \"gemr:hasObservation \"\" at line 23, column 20.\nWas expecting one of:\n    \")\" ...\n    \"=\" ...\n    \"!=\" ...\n    \">\" ...\n    \"<\" ...\n    \"<=\" ...\n    \">=\" ...\n    \"||\" ...\n    \"&&\" ...\n    \"+\" ...\n    \"-\" ...\n    \"*\" ...\n    \"/\" ...\n    \"not\" ...\n    \"in\" ...\n    <INTEGER_POSITIVE> ...\n    <INTEGER_NEGATIVE> ...\n    <DECIMAL_POSITIVE> ...\n    <DECIMAL_NEGATIVE> ...\n    <DOUBLE_POSITIVE> ...\n    <DOUBLE_NEGATIVE> ...\n    ",
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?year ?gdpValue ?nextYear ?nextGdpValue ((?nextGdpValue - ?gdpValue) / ?gdpValue AS ?growthRate)\nWHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:GDP ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?gdpValue .\n  ?country gemr:countryName ?countryName .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2010 && ?year <= 2020)\n\n  ?nextYearObs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:GDP ;\n       gemr:hasYear ?nextYearEntity ;\n       gemr:observationValue ?nextGdpValue .\n  ?nextYearEntity gemr:yearValue ?nextYear .\n  \n  BIND(xsd:integer(STR(?year)) AS ?yearInt)\n  BIND(xsd:integer(STR(?nextYear)) AS ?nextYearInt)\n  FILTER (?nextYearInt = ?yearInt + 1)\n}\nORDER BY ?countryName ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_USD",
+          "label": "GDP CONST 2010 USD",
+          "type": "indicator",
+          "score": 0.7438
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_LCU",
+          "label": "GDP CONST 2010 LCU",
+          "type": "indicator",
+          "score": 0.7367
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_constant_2010_LCU",
+          "label": "GDP at market prices constant 2010 LCU",
+          "type": "indicator",
+          "score": 0.7266
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_constant_2010_US",
+          "label": "GDP at market prices constant 2010 US",
+          "type": "indicator",
+          "score": 0.7265
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CURR_USD",
+          "label": "GDP CURR USD",
+          "type": "indicator",
+          "score": 0.6896
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CURR_LCU",
+          "label": "GDP CURR LCU",
+          "type": "indicator",
+          "score": 0.6835
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP",
+          "label": "GDP",
+          "type": "indicator",
+          "score": 0.6769
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_current_LCU",
+          "label": "GDP at market prices current LCU",
+          "type": "indicator",
+          "score": 0.6699
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M02",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did the governance score for Poland change between 2005 and 2023?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.33,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?governanceScore WHERE {\n  ?country gemr:countryName \"Poland\" .\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year IN (\"2005\", \"2023\"))\n  ?riskScore gemr:governanceScore ?governanceScore .\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?governanceScore WHERE {\n  ?country gemr:countryName \"Poland\" .\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  ?riskScore gemr:governanceScore ?governanceScore .\n  FILTER (?year IN (2005, 2023))\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6436
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6348
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.5701
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#PoliticalStability",
+          "label": "PoliticalStability",
+          "type": "indicator",
+          "score": 0.5688
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.5617
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.5566
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.5546
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.5529
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M03",
+      "tier": "medium",
+      "result_type": "comparison",
+      "question": "Did stock market performance in China in 2008 predict default rates in 2009?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 16,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 3.76,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?stockValue ?defaultRateValue\nWHERE {\n  ?stockObs a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasIndicator ?stockIndicator ;\n    gemr:hasYear ?yearEntity ;\n    gemr:observationValue ?stockValue .\n  ?country gemr:countryName \"China\" .\n  FILTER (?stockIndicator IN (gemr:Stock_Market_Index_LCU, gemr:Stock_Market_Index_US, gemr:STOCK_USD, gemr:STOCK_LCU))\n\n  ?yearEntity gemr:yearValue ?yearLit .\n  BIND(xsd:integer(STR(?yearLit)) AS ?yearInt)\n  FILTER (?yearInt = 2008)\n\n  ?nextYearEntity gemr:yearValue ?nextYearLit .\n  BIND(xsd:integer(STR(?nextYearLit)) AS ?nextYearInt)\n  FILTER (?nextYearInt = 2009)\n\n  ?defaultRateObs a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasIndicator ?defaultRateIndicator ;\n    gemr:hasYear ?nextYearEntity ;\n    gemr:observationValue ?defaultRateValue .\n  FILTER (?defaultRateIndicator IN (gemr:Historical_private_default_rates, gemr:Historical_public_default_rates))\n}\nORDER BY ?stockValue\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?stockValue ?defaultRateValue\nWHERE {\n  ?stockObs a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasIndicator ?stockIndicator ;\n    gemr:hasYear ?yearEntity ;\n    gemr:observationValue ?stockValue .\n  ?country gemr:countryName \"China\" .\n  FILTER (?stockIndicator IN (gemr:Stock_Market_Index_LCU, gemr:Stock_Market_Index_US, gemr:STOCK_USD, gemr:STOCK_LCU))\n\n  ?yearEntity gemr:yearValue ?yearLit .\n  BIND(xsd:integer(STR(?yearLit)) AS ?yearInt)\n  FILTER (?yearInt = 2008)\n\n  ?nextYearEntity gemr:yearValue ?nextYearLit .\n  BIND(xsd:integer(STR(?nextYearLit)) AS ?nextYearInt)\n  FILTER (?nextYearInt = 2009)\n\n  ?defaultRateObs a gemr:Observation ;\n    gemr:hasCountry ?country ;\n    gemr:hasIndicator ?defaultRateIndicator ;\n    gemr:hasYear ?nextYearEntity ;\n    gemr:observationValue ?defaultRateValue .\n  FILTER (?defaultRateIndicator IN (gemr:Historical_private_default_rates, gemr:Historical_public_default_rates))\n}\nORDER BY ?stockValue\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.6421
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.6371
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Stock_Market_Index_LCU",
+          "label": "Stock Market Index LCU",
+          "type": "indicator",
+          "score": 0.6295
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Stock_Market_Index_US",
+          "label": "Stock Market Index US",
+          "type": "indicator",
+          "score": 0.6281
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#STOCK_USD",
+          "label": "STOCK USD",
+          "type": "indicator",
+          "score": 0.6144
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#STOCK_LCU",
+          "label": "STOCK LCU",
+          "type": "indicator",
+          "score": 0.598
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.5924
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.5721
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M04",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did governance scores in Brazil change between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.35,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?governanceScore WHERE {\n  ?country gemr:countryName \"Brazil\" .\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year IN (2015, 2020))\n  ?riskScore gemr:governanceScore ?governanceScore .\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?governanceScore WHERE {\n  ?country gemr:countryName \"Brazil\" .\n  ?country gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  ?riskScore gemr:governanceScore ?governanceScore .\n  FILTER (?year IN (2015, 2020))\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6657
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6426
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.5859
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.5725
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#PoliticalStability",
+          "label": "PoliticalStability",
+          "type": "indicator",
+          "score": 0.5649
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.5628
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.5609
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.5565
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M05",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "Show me how private default rates and risk scores for the Philippines co-evolved from 2010 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 6.26,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?privateDefaultRate ?totalRiskScore\nWHERE {\n  ?country gemr:countryName \"Philippines\" .\n  ?obs gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:Historical_private_default_rates ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?privateDefaultRate .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2010 && ?year <= 2023) .\n\n  ?rs gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity ;\n      gemr:totalRiskScore ?totalRiskScore .\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?privateDefaultRate ?totalRiskScore\nWHERE {\n  ?country gemr:countryName \"Philippines\" .\n  ?obs gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:Historical_private_default_rates ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?privateDefaultRate .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2010 && ?year <= 2023) .\n\n  ?rs gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity ;\n      gemr:totalRiskScore ?totalRiskScore .\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.7459
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.7166
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6445
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6287
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.6017
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.5986
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.5985
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#contagionRiskScore",
+          "label": "contagion risk score",
+          "type": "property",
+          "score": 0.5938
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M06",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "What were the annual total reserves for Mexico from 2005 to 2015?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 11,
+      "hallucination_count": 0,
+      "attempts": 1,
+      "elapsed_seconds": 2.26,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?totalReserves WHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:RESERVES_TOTAL ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?totalReserves .\n  ?country gemr:countryName \"Mexico\" .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2005 && ?year <= 2015)\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?totalReserves WHERE {\n  ?obs a gemr:Observation ;\n       gemr:hasCountry ?country ;\n       gemr:hasIndicator gemr:RESERVES_TOTAL ;\n       gemr:hasYear ?yearEntity ;\n       gemr:observationValue ?totalReserves .\n  ?country gemr:countryName \"Mexico\" .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2005 && ?year <= 2015)\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#RESERVES_TOTAL",
+          "label": "RESERVES TOTAL",
+          "type": "indicator",
+          "score": 0.6773
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Total_Reserves",
+          "label": "Total Reserves",
+          "type": "indicator",
+          "score": 0.6691
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RESERVES_IMPORT_COVER",
+          "label": "RESERVES IMPORT COVER",
+          "type": "indicator",
+          "score": 0.604
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Foreign_Reserves_Months_Import_Cover",
+          "label": "Foreign Reserves Months Import Cover",
+          "type": "indicator",
+          "score": 0.5755
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exports_Merchandise_constant_2010_US_not_seasonally_adjusted",
+          "label": "Exports Merchandise constant 2010 US not seasonally adjusted",
+          "type": "indicator",
+          "score": 0.5424
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Imports_Merchandise_constant_2010_US_not_seasonally_adjusted",
+          "label": "Imports Merchandise constant 2010 US not seasonally adjusted",
+          "type": "indicator",
+          "score": 0.5386
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_OLD_LCU_USD",
+          "label": "XRATE OLD LCU USD",
+          "type": "indicator",
+          "score": 0.5375
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exports_Merchandise_constant_2010_US_seasonally_adjusted",
+          "label": "Exports Merchandise constant 2010 US seasonally adjusted",
+          "type": "indicator",
+          "score": 0.5344
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "M07",
+      "tier": "medium",
+      "result_type": "temporal_series",
+      "question": "How did exchange rates change in Thailand between 2008 and 2012?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 50,
+      "hallucination_count": 0,
+      "attempts": 2,
+      "elapsed_seconds": 5.41,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?exchangeRate WHERE {\n  ?obs gemr:hasCountry ?country .\n  ?country gemr:countryName \"Thailand\" .\n  ?obs gemr:hasIndicator ?indicator .\n  FILTER (?indicator IN (gemr:Real_Effective_Exchange_Rate, gemr:Nominal_Effective_Exchange_Rate, gemr:Exchange_rate_old_LCU_per_USD, gemr:Official_exchange_rate_LCU_per_USD, gemr:Exchange_rate_new_LCU_per_USD, gemr:XRATE_OLD_LCU_USD, gemr:REER, gemr:XRATE_NEW_LCU_USD, gemr:NEER, gemr:XRATE_OFFICIAL)) .\n  ?obs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2008 && ?year <= 2012) .\n  ?obs gemr:observationValue ?exchangeRate .\n}\nORDER BY ?year\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?year ?indicatorName ?exchangeRate WHERE {\n  ?obs gemr:hasCountry ?country .\n  ?country gemr:countryName \"Thailand\" .\n  ?obs gemr:hasIndicator ?indicator .\n  ?indicator rdfs:label ?indicatorName .\n  FILTER (CONTAINS(LCASE(?indicatorName), \"exchange rate\")) .\n  ?obs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2008 && ?year <= 2012) .\n  ?obs gemr:observationValue ?exchangeRate .\n}\nORDER BY ?year\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Real_Effective_Exchange_Rate",
+          "label": "Real Effective Exchange Rate",
+          "type": "indicator",
+          "score": 0.6243
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Nominal_Effective_Exchange_Rate",
+          "label": "Nominal Effective Exchange Rate",
+          "type": "indicator",
+          "score": 0.6144
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_old_LCU_per_USD",
+          "label": "Exchange rate old LCU per USD",
+          "type": "indicator",
+          "score": 0.6059
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Official_exchange_rate_LCU_per_USD",
+          "label": "Official exchange rate LCU per USD",
+          "type": "indicator",
+          "score": 0.6028
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_new_LCU_per_USD",
+          "label": "Exchange rate new LCU per USD",
+          "type": "indicator",
+          "score": 0.5957
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_OLD_LCU_USD",
+          "label": "XRATE OLD LCU USD",
+          "type": "indicator",
+          "score": 0.5945
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#REER",
+          "label": "REER",
+          "type": "indicator",
+          "score": 0.5904
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_NEW_LCU_USD",
+          "label": "XRATE NEW LCU USD",
+          "type": "indicator",
+          "score": 0.5629
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "C01",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had private default rates above 5% between 2010 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": true,
+      "empty_result": false,
+      "result_count": 35,
+      "hallucination_count": 1,
+      "attempts": 1,
+      "elapsed_seconds": 2.3,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName ?year WHERE {\n  ?obs gemr:hasCountry ?country .\n  ?country gemr:countryName ?countryName .\n  ?obs gemr:hasIndicator gemr:Historical_private_default_rates .\n  ?obs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2010 && ?year <= 2020) .\n  ?obs gemr:observationValue ?value .\n  FILTER (?value > 0.05)\n}\nORDER BY ?countryName\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName ?year WHERE {\n  ?obs gemr:hasCountry ?country .\n  ?country gemr:countryName ?countryName .\n  ?obs gemr:hasIndicator gemr:Historical_private_default_rates .\n  ?obs gemr:hasYear ?yearEntity .\n  ?yearEntity gemr:yearValue ?year .\n  FILTER (?year >= 2010 && ?year <= 2020) .\n  ?obs gemr:observationValue ?value .\n  FILTER (?value > 0.05)\n}\nORDER BY ?countryName\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.778
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.7201
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_USD",
+          "label": "GDP CONST 2010 USD",
+          "type": "indicator",
+          "score": 0.6078
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_CONST_2010_LCU",
+          "label": "GDP CONST 2010 LCU",
+          "type": "indicator",
+          "score": 0.6066
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_constant_2010_LCU",
+          "label": "GDP at market prices constant 2010 LCU",
+          "type": "indicator",
+          "score": 0.6013
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6012
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GDP_at_market_prices_constant_2010_US",
+          "label": "GDP at market prices constant 2010 US",
+          "type": "indicator",
+          "score": 0.5943
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_old_LCU_per_USD",
+          "label": "Exchange rate old LCU per USD",
+          "type": "indicator",
+          "score": 0.5937
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "C02",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Rank all countries by their average total risk score from 2015 to 2023.",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.79,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName (AVG(?totalRiskScore) AS ?avgTotalRiskScore) WHERE {\n  ?country a gemr:Country ;\n           gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasYear ?year .\n  ?year gemr:yearValue ?yearValue .\n  FILTER (?yearValue >= 2015 && ?yearValue <= 2023)\n  ?country gemr:countryName ?countryName .\n}\nGROUP BY ?countryName\nORDER BY DESC(?avgTotalRiskScore)\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName (AVG(?totalRiskScore) AS ?avgTotalRiskScore) WHERE {\n  ?country a gemr:Country ;\n           gemr:hasRiskScore ?riskScore .\n  ?riskScore gemr:totalRiskScore ?totalRiskScore ;\n             gemr:hasYear ?year .\n  ?year gemr:yearValue ?yearValue .\n  FILTER (?yearValue >= 2015 && ?yearValue <= 2023)\n  ?country gemr:countryName ?countryName .\n}\nGROUP BY ?countryName\nORDER BY DESC(?avgTotalRiskScore)\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.7037
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#totalRiskScore",
+          "label": "total risk score",
+          "type": "property",
+          "score": 0.6764
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.6357
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6354
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.6348
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.6262
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#riskTier",
+          "label": "risk tier",
+          "type": "property",
+          "score": 0.626
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#PoliticalStability",
+          "label": "PoliticalStability",
+          "type": "indicator",
+          "score": 0.6259
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "C03",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "For each country, what year had the highest private default rate, and what was that rate?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 7.61,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?year ?maxRate WHERE {\n  {\n    SELECT ?countryName (MAX(?observationValue) AS ?maxRate) WHERE {\n      ?obs gemr:hasCountry ?country .\n      ?country gemr:countryName ?countryName .\n      ?obs gemr:hasIndicator gemr:Historical_private_default_rates .\n      ?obs gemr:observationValue ?observationValue .\n      ?obs gemr:hasYear ?yearEntity .\n      ?yearEntity gemr:yearValue ?year .\n    }\n    GROUP BY ?countryName\n  }\n  ?obs2 gemr:hasCountry ?country2 .\n  ?country2 gemr:countryName ?countryName .\n  ?obs2 gemr:hasIndicator gemr:Historical_private_default_rates .\n  ?obs2 gemr:observationValue ?maxRate .\n  ?obs2 gemr:hasYear ?yearEntity2 .\n  ?yearEntity2 gemr:yearValue ?year .\n  FILTER (?maxRate = MAX(?maxRate))\n  FILTER (?obs2 gemr:observationValue = ?maxRate)\n}\nORDER BY ?countryName\nLIMIT 100",
+      "error": "HTTP 400: MALFORMED QUERY: Encountered \" <PNAME_LN> \"gemr:observationValue \"\" at line 25, column 17.\nWas expecting one of:\n    \")\" ...\n    \"=\" ...\n    \"!=\" ...\n    \">\" ...\n    \"<\" ...\n    \"<=\" ...\n    \">=\" ...\n    \"||\" ...\n    \"&&\" ...\n    \"+\" ...\n    \"-\" ...\n    \"*\" ...\n    \"/\" ...\n    \"not\" ...\n    \"in\" ...\n    <INTEGER_POSITIVE> ...\n    <INTEGER_NEGATIVE> ...\n    <DECIMAL_POSITIVE> ...\n    <DECIMAL_NEGATIVE> ...\n    <DOUBLE_POSITIVE> ...\n    <DOUBLE_NEGATIVE> ...\n    ",
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?year ?maxRate WHERE {\n  {\n    SELECT ?countryName (MAX(?observationValue) AS ?maxRate) WHERE {\n      ?obs gemr:hasCountry ?country .\n      ?country gemr:countryName ?countryName .\n      ?obs gemr:hasIndicator gemr:PrivateDefaultRate .\n      ?obs gemr:observationValue ?observationValue .\n      ?obs gemr:hasYear ?yearEntity .\n      ?yearEntity gemr:yearValue ?year .\n    }\n    GROUP BY ?countryName\n  }\n  ?obs2 gemr:hasCountry ?country2 .\n  ?country2 gemr:countryName ?countryName .\n  ?obs2 gemr:hasIndicator gemr:PrivateDefaultRate .\n  ?obs2 gemr:observationValue ?maxRate .\n  ?obs2 gemr:hasYear ?yearEntity2 .\n  ?yearEntity2 gemr:yearValue ?year .\n  FILTER (?maxRate = MAX(?obs2))\n}\nORDER BY ?countryName\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.7997
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.745
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#defaultRiskScore",
+          "label": "default risk score",
+          "type": "property",
+          "score": 0.6205
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6125
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Exchange_rate_old_LCU_per_USD",
+          "label": "Exchange rate old LCU per USD",
+          "type": "indicator",
+          "score": 0.6069
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Official_exchange_rate_LCU_per_USD",
+          "label": "Official exchange rate LCU per USD",
+          "type": "indicator",
+          "score": 0.5927
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#XRATE_OLD_LCU_USD",
+          "label": "XRATE OLD LCU USD",
+          "type": "indicator",
+          "score": 0.5917
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#affectedBy",
+          "label": "affected by",
+          "type": "property",
+          "score": 0.5859
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "C04",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Which countries had improving governance scores AND declining private default rates between 2015 and 2020?",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 11.47,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?country gemr:hasRiskScore ?riskScore2015 .\n  ?riskScore2015 gemr:hasYear ?yearEntity2015 .\n  ?yearEntity2015 gemr:yearValue ?year2015 .\n  FILTER (xsd:integer(STR(?year2015)) = 2015)\n  ?riskScore2015 gemr:governanceScore ?govScore2015 .\n  ?riskScore2015 gemr:hasCountry ?country .\n\n  ?obs2015 gemr:hasCountry ?country .\n  ?obs2015 gemr:hasIndicator gemr:Historical_private_default_rates .\n  ?obs2015 gemr:hasYear ?yearEntity2015_obs .\n  ?yearEntity2015_obs gemr:yearValue ?year2015 .\n  FILTER (xsd:integer(STR(?year2015)) = 2015)\n  ?obs2015 gemr:observationValue ?defaultRate2015 .\n\n  ?country gemr:hasRiskScore ?riskScore2020 .\n  ?riskScore2020 gemr:hasYear ?yearEntity2020 .\n  ?yearEntity2020 gemr:yearValue ?year2020 .\n  FILTER (xsd:integer(STR(?year2020)) = 2020)\n  ?riskScore2020 gemr:governanceScore ?govScore2020 .\n  ?riskScore2020 gemr:hasCountry ?country .\n\n  ?obs2020 gemr:hasCountry ?country .\n  ?obs2020 gemr:hasIndicator gemr:Historical_private_default_rates .\n  ?obs2020 gemr:hasYear ?yearEntity2020_obs .\n  ?yearEntity2020_obs gemr:yearValue ?year2020 .\n  FILTER (xsd:integer(STR(?year2020)) = 2020)\n  ?obs2020 gemr:observationValue ?defaultRate2020 .\n\n  ?country gemr:countryName ?countryName .\n\n  FILTER (?govScore2020 > ?govScore2015)\n  FILTER (?defaultRate2020 < ?defaultRate2015)\n}\nORDER BY ?countryName\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT DISTINCT ?countryName\nWHERE {\n  ?country gemr:hasRiskScore ?riskScore2015 .\n  ?riskScore2015 gemr:hasYear ?year2015 .\n  ?year2015 gemr:yearValue \"2015\"^^xsd:gYear .\n  ?riskScore2015 gemr:governanceScore ?govScore2015 .\n  ?riskScore2015 gemr:hasCountry ?country .\n  gemr:Historical_private_default_rates gemr:servesAsProxyFor ?privateDefaultRate .\n  ?obs2015 gemr:hasCountry ?country .\n  ?obs2015 gemr:hasIndicator ?privateDefaultRate .\n  ?obs2015 gemr:hasYear ?year2015 .\n  ?obs2015 gemr:observationValue ?defaultRate2015 .\n\n  ?country gemr:hasRiskScore ?riskScore2020 .\n  ?riskScore2020 gemr:hasYear ?year2020 .\n  ?year2020 gemr:yearValue \"2020\"^^xsd:gYear .\n  ?riskScore2020 gemr:governanceScore ?govScore2020 .\n  ?riskScore2020 gemr:hasCountry ?country .\n  ?obs2020 gemr:hasCountry ?country .\n  ?obs2020 gemr:hasIndicator ?privateDefaultRate .\n  ?obs2020 gemr:hasYear ?year2020 .\n  ?obs2020 gemr:observationValue ?defaultRate2020 .\n\n  ?country gemr:countryName ?countryName .\n\n  FILTER (?govScore2020 > ?govScore2015)\n  FILTER (?defaultRate2020 < ?defaultRate2015)\n}\nORDER BY ?countryName\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_private_default_rates",
+          "label": "Historical private default rates",
+          "type": "indicator",
+          "score": 0.6912
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6698
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6676
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#Historical_public_default_rates",
+          "label": "Historical public default rates",
+          "type": "indicator",
+          "score": 0.6519
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.6154
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.6095
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.6069
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.5984
+        }
+      ]
+    },
+    {
+      "condition": "pipeline",
+      "question_id": "C05",
+      "tier": "complex",
+      "result_type": "list",
+      "question": "Show me all economic health scores and governance scores for all countries in 2018, ordered by economic health score descending.",
+      "syntactically_valid": true,
+      "execution_success": false,
+      "empty_result": false,
+      "result_count": 0,
+      "hallucination_count": 0,
+      "attempts": 3,
+      "elapsed_seconds": 5.93,
+      "sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?economicHealthScore ?governanceScore WHERE {\n  ?rs a gemr:RiskScore ;\n      gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity .\n  OPTIONAL { ?rs gemr:economicHealthScore ?economicHealthScore . }\n  OPTIONAL { ?rs gemr:governanceScore ?governanceScore . }\n  ?country gemr:countryName ?countryName .\n  ?yearEntity gemr:yearValue ?yearValue .\n  FILTER (?yearValue = 2018)\n}\nORDER BY DESC(?economicHealthScore)\nLIMIT 100",
+      "error": null,
+      "initial_sparql": "PREFIX gemr: <https://gemr-kg.org/ontology#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT ?countryName ?economicHealthScore ?governanceScore WHERE {\n  ?rs a gemr:RiskScore ;\n      gemr:hasCountry ?country ;\n      gemr:hasYear ?yearEntity ;\n      gemr:economicHealthScore ?economicHealthScore ;\n      gemr:governanceScore ?governanceScore .\n  ?country gemr:countryName ?countryName .\n  ?yearEntity gemr:yearValue \"2018\"^^xsd:gYear .\n}\nORDER BY DESC(?economicHealthScore)\nLIMIT 100",
+      "grounded_iris": [
+        {
+          "iri": "https://gemr-kg.org/ontology#GovernmentEffectiveness",
+          "label": "GovernmentEffectiveness",
+          "type": "indicator",
+          "score": 0.6897
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#economicHealthScore",
+          "label": "economic health score",
+          "type": "property",
+          "score": 0.6691
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#governanceScore",
+          "label": "governance score",
+          "type": "property",
+          "score": 0.6661
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#hasRiskScore",
+          "label": "has risk score",
+          "type": "property",
+          "score": 0.6578
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#ControlOfCorruption",
+          "label": "ControlOfCorruption",
+          "type": "indicator",
+          "score": 0.6559
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#RuleOfLaw",
+          "label": "RuleOfLaw",
+          "type": "indicator",
+          "score": 0.6468
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#similarityScore",
+          "label": "similarity score",
+          "type": "property",
+          "score": 0.6442
+        },
+        {
+          "iri": "https://gemr-kg.org/ontology#VoiceAndAccountability",
+          "label": "VoiceAndAccountability",
+          "type": "indicator",
+          "score": 0.6439
+        }
+      ]
+    }
+  ]
+}

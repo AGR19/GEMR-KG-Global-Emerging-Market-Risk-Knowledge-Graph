@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import About from './components/About';
+import AskAI from './components/AskAI';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -26,6 +27,7 @@ function App() {
         boxSizing: 'border-box'
       }}>
         {activeTab === 'home' && <Home />}
+        {activeTab === 'ask' && <AskAI />}
         {activeTab === 'about' && <About />}
       </main>
     </div>
