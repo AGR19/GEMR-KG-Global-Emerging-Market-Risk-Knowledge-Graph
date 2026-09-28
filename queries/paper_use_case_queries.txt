@@ -1,0 +1,207 @@
+GEMR-KG: SPARQL Use-Case Queries
+=================================
+
+The eight SPARQL use-case queries published in the GEMR-KG paper (Figure 3,
+"SPARQL Queries"), transcribed verbatim. Each query is listed with the
+literature it is derived from; full references are at the end of this file.
+
+Endpoint : http://localhost:7200/repositories/GEMR  (see Docker/README.md)
+Ontology : ontology/final-gemr-fibo-reasoned.owl
+
+Notes
+-----
+* Queries 1 and 2 declare the gemr: prefix; queries 3-8 omit prefix
+  declarations, as in the paper. GraphDB resolves them from the repository's
+  namespaces. When using another SPARQL endpoint, prepend:
+
+      PREFIX gemr: <https://gemr-kg.org/ontology#>
+      PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+* Queries 7 and 8 are abbreviated in the paper. The lines marked
+  "# Growth calcs omitted for brevity" and "# Calculation logic omitted"
+  stand for the elided computation of the aggregated variables.
+
+
+------------------------------------------------------------------------------
+1. Comprehensive Data Retrieval
+------------------------------------------------------------------------------
+Fetch complete dataset (all indicators, years, values) for a specific country.
+Mirrors the IMF "Signal Approach" for aggregating risk factors.
+Derived from: International Monetary Fund (2017).
+
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+SELECT DISTINCT ?indicator ?year ?value WHERE {
+  ?obs a gemr:Observation ; gemr:hasCountry ?c ;
+       gemr:hasIndicator ?indicator ;
+       gemr:hasYear ?yEnt ; gemr:observationValue ?val .
+  ?c gemr:countryName "Brazil" . ?yEnt gemr:yearValue ?year .
+} ORDER BY ?indicator ?year
+
+
+------------------------------------------------------------------------------
+2. Comprehensive Risk Profiling
+------------------------------------------------------------------------------
+Retrieves total risk score, classification, and component scores. Provides a
+holistic snapshot of stability vs specific areas of concern.
+Derived from: GEMR-KG composite risk score (no external citation in the paper).
+
+PREFIX gemr: <https://gemr-kg.org/ontology#>
+SELECT ?cName ?year ?total ?tier ?gov ?econ ?vuln WHERE {
+  BIND("2023"^^xsd:gYear AS ?tYear) BIND("Poland" AS ?tCtry)
+  ?sObs a gemr:RiskScore ; gemr:hasCountry ?c ;
+        gemr:hasYear ?yEnt ; gemr:totalRiskScore ?total .
+  ?c gemr:countryName ?cName . ?yEnt gemr:yearValue ?year .
+  FILTER (?year = ?tYear && STR(?cName) = ?tCtry)
+  OPTIONAL { ?sObs gemr:riskTier ?tier }
+  OPTIONAL { ?sObs gemr:governanceScore ?gov }
+  OPTIONAL { ?sObs gemr:economicHealthScore ?econ }
+  OPTIONAL { ?sObs gemr:externalVulnerabilityScore ?vuln }
+}
+
+
+------------------------------------------------------------------------------
+3. Early Warning: Stock vs Default
+------------------------------------------------------------------------------
+Analyzes Stock Market (Year T) vs Private Default Rates (T + 1). Tests the
+hypothesis that market sentiment precedes fundamental credit ratings.
+Derived from: Wu (2008).
+
+SELECT ?cName ?yInt ?stock (AVG(?defRate) AS ?avgDef) WHERE {
+  ?obsS a gemr:Stock_Market_Index_LCU ; gemr:hasCountry ?c ;
+        gemr:hasYear ?yE ; gemr:observationValue ?stock .
+  ?yE gemr:yearValue ?yLit . BIND(xsd:integer(STR(?yLit)) AS ?yInt)
+  BIND(?yInt + 1 AS ?tYInt)
+  ?tYE gemr:yearValue ?tYLit .
+  FILTER(xsd:integer(STR(?tYLit)) = ?tYInt)
+  ?obsD a gemr:PrivateDefaultRate ; gemr:hasCountry ?c ;
+        gemr:hasYear ?tYE ; gemr:observationValue ?defRate .
+  ?c gemr:countryName ?cName .
+} GROUP BY ?cName ?yInt ?stock ?tYInt LIMIT 50
+
+
+------------------------------------------------------------------------------
+4. Political Stability Impact Tracker
+------------------------------------------------------------------------------
+Tracks negative Political Stability (T) impact on GDP (T + 1). Validates the
+'Governance-Growth' transmission channel.
+Derived from: Aisen & Veiga (2011).
+
+SELECT ?cName ?yInt ?gdp (AVG(?polStab) AS ?avgPol) WHERE {
+  ?obsP a gemr:PoliticalStability ; gemr:hasCountry ?c ;
+        gemr:hasYear ?yE ; gemr:observationValue ?polStab .
+  FILTER(?polStab < 0)
+  ?yE gemr:yearValue ?yLit . BIND(xsd:integer(STR(?yLit)) AS ?yInt)
+  BIND(?yInt + 1 AS ?tYInt)
+  ?obsG a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?c ;
+        gemr:hasYear ?gYRaw ; gemr:observationValue ?gdp .
+  OPTIONAL { ?gYRaw gemr:yearValue ?gYVal }
+  BIND(COALESCE(xsd:integer(STR(?gYVal)), ?gYRaw) AS ?gYInt)
+  FILTER(?gYInt = ?tYInt) ?c gemr:countryName ?cName .
+} GROUP BY ?cName ?yInt ?tYInt ?gdp LIMIT 50
+
+
+------------------------------------------------------------------------------
+5. Default -> Recovery Lag
+------------------------------------------------------------------------------
+Lag between stock market recovery and real economic (GDP) recovery after
+default. Asset prices often rebound earlier than real indicators.
+Derived from: Kalesnik & Polychronopoulos (2020).
+
+SELECT ?cName ?yT ?yTarget ?gdp (AVG(?stk) AS ?avgStk) WHERE {
+  ?obsS a gemr:Stock_Market_Index_LCU ; gemr:hasCountry ?c ;
+        gemr:hasYear ?yT_Raw ; gemr:observationValue ?stk .
+  ?obsG a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?c ;
+        gemr:hasYear ?yTar_Raw ; gemr:observationValue ?gdp .
+  OPTIONAL { ?yT_Raw gemr:yearValue ?yVT }
+  OPTIONAL { ?yTar_Raw gemr:yearValue ?yVTar }
+  BIND(COALESCE(xsd:integer(STR(?yVT)), ?yT_Raw) AS ?yT)
+  BIND(COALESCE(xsd:integer(STR(?yVTar)), ?yTar_Raw) AS ?yTarget)
+  FILTER(?yTarget = ?yT + 1) ?c gemr:countryName ?cName .
+} GROUP BY ?cName ?yT ?yTarget ?gdp
+
+
+------------------------------------------------------------------------------
+6. GDP Growth Tracker
+------------------------------------------------------------------------------
+Calculates annual GDP growth percentage. Provides a standardized metric for
+comparing economic performance across economies.
+Derived from: standard year-over-year growth metric (no external citation in
+the paper).
+
+SELECT ?cName ?year ?gdpCurr ?growthPct WHERE {
+  ?obsG_T a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?c ;
+          gemr:hasYear ?yT_R ; gemr:observationValue ?gdpCurr .
+  ?obsG_P a gemr:GDP_CONST_2010_USD ; gemr:hasCountry ?c ;
+          gemr:hasYear ?yP_R ; gemr:observationValue ?gdpPrev .
+  OPTIONAL { ?yT_R gemr:yearValue ?yVT }
+  OPTIONAL { ?yP_R gemr:yearValue ?yVP }
+  BIND(COALESCE(xsd:integer(STR(?yVT)), ?yT_R) AS ?year)
+  BIND(COALESCE(xsd:integer(STR(?yVP)), ?yP_R) AS ?yPrev)
+  FILTER(?yPrev = ?year - 1)
+  BIND(((?gdpCurr - ?gdpPrev)/?gdpPrev)*100 AS ?growthPct)
+  ?c gemr:countryName ?cName .
+} LIMIT 100
+
+
+------------------------------------------------------------------------------
+7. Trade-Based Contagion
+------------------------------------------------------------------------------
+Traces economic shocks from Source to Dependent Partner via trade. Identifies
+spillover risks from major trading partners.
+Derived from: Van Rijckeghem & Weder (2003).
+
+SELECT ?src ?ptnr ?yT (AVG(?sGro) AS ?aSGr) (AVG(?pExGr) AS ?aPEx)
+WHERE {
+  { ?ptnr gemr:similarTo ?source . } UNION
+  { ?ptnr gemr:belongsToCluster ?cl . ?source gemr:belongsToCluster ?cl .
+    FILTER(?source != ?ptnr) } UNION
+  { ?source gemr:countryName ?sN . ?ptnr gemr:countryName ?pN .
+    FILTER((STR(?sN)="Brazil" && STR(?pN)="Mexico")) }
+  # Growth calcs omitted for brevity
+  ?source gemr:countryName ?src . ?ptnr gemr:countryName ?ptnr .
+} GROUP BY ?src ?ptnr ?yT LIMIT 50
+
+
+------------------------------------------------------------------------------
+8. Currency Crisis Early Warning
+------------------------------------------------------------------------------
+Detects regional currency contagion based on "Neighborhood Effects" in
+emerging markets.
+Derived from: Basu (2001).
+
+SELECT ?src ?tgt ?yr ?sDep ?tDep ?risk WHERE {
+  { SELECT ?src ?tgt ?yr (AVG(?sD_P) AS ?sDep) (AVG(?tD_P) AS ?tDep)
+    WHERE {
+      ?obsS a gemr:Exchange_rate_new_LCU_per_USD ;
+            gemr:hasCountry ?s ; gemr:observationValue ?sV .
+      # Calculation logic omitted
+      VALUES (?sN ?tN) { ("Brazil" "Mexico") ("Thailand" "Philippines") }
+      ?s gemr:countryName ?sN . ?t gemr:countryName ?tN .
+      ?s gemr:countryName ?src . ?t gemr:countryName ?tgt .
+    } GROUP BY ?src ?tgt ?yr }
+  BIND(IF(?tDep > 10, "HIGH", IF(?tDep > 5, "MOD", "LOW")) AS ?risk)
+}
+
+
+==============================================================================
+References
+==============================================================================
+Aisen, A., & Veiga, F. J. (2011). How does political instability affect
+    economic growth? IMF Working Paper WP/11/12. International Monetary Fund.
+
+Basu, T. G. (2001). What drives contagion: Trade, neighborhood, or financial
+    links? IMF Working Paper WP/01/29. International Monetary Fund.
+
+International Monetary Fund. (2017). Assessing country risk: Selected
+    approaches. Technical note. Washington, DC: IMF.
+
+Kalesnik, V., & Polychronopoulos, A. (2020). Value in recessions and
+    recoveries. Technical report. Research Affiliates.
+
+Van Rijckeghem, C., & Weder, B. (2003). Spillovers through banking centers:
+    A panel data analysis of bank flows. Journal of International Money and
+    Finance, 22(4), 483-509.
+
+Wu, T. (2008). The dynamic pricing of sovereign risk in emerging markets:
+    Fundamentals and sentiment. Journal of International Money and Finance,
+    27(7), 1171-1188.
