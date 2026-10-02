@@ -27,7 +27,7 @@ Notes
 ------------------------------------------------------------------------------
 Fetch complete dataset (all indicators, years, values) for a specific country.
 Mirrors the IMF "Signal Approach" for aggregating risk factors.
-Derived from: International Monetary Fund (2017).
+Derived from: Ahuja, Wiseman & Syed (2017).
 
 PREFIX gemr: <https://gemr-kg.org/ontology#>
 SELECT DISTINCT ?indicator ?year ?value WHERE {
@@ -64,7 +64,7 @@ SELECT ?cName ?year ?total ?tier ?gov ?econ ?vuln WHERE {
 ------------------------------------------------------------------------------
 Analyzes Stock Market (Year T) vs Private Default Rates (T + 1). Tests the
 hypothesis that market sentiment precedes fundamental credit ratings.
-Derived from: Wu (2008).
+Derived from: Remolona, Scatigna & Wu (2008).
 
 SELECT ?cName ?yInt ?stock (AVG(?defRate) AS ?avgDef) WHERE {
   ?obsS a gemr:Stock_Market_Index_LCU ; gemr:hasCountry ?c ;
@@ -84,7 +84,7 @@ SELECT ?cName ?yInt ?stock (AVG(?defRate) AS ?avgDef) WHERE {
 ------------------------------------------------------------------------------
 Tracks negative Political Stability (T) impact on GDP (T + 1). Validates the
 'Governance-Growth' transmission channel.
-Derived from: Aisen & Veiga (2011).
+Derived from: Aisen & Veiga (2013).
 
 SELECT ?cName ?yInt ?gdp (AVG(?polStab) AS ?avgPol) WHERE {
   ?obsP a gemr:PoliticalStability ; gemr:hasCountry ?c ;
@@ -167,7 +167,7 @@ WHERE {
 ------------------------------------------------------------------------------
 Detects regional currency contagion based on "Neighborhood Effects" in
 emerging markets.
-Derived from: Basu (2001).
+Derived from: Hernández & Valdés (2001).
 
 SELECT ?src ?tgt ?yr ?sDep ?tDep ?risk WHERE {
   { SELECT ?src ?tgt ?yr (AVG(?sD_P) AS ?sDep) (AVG(?tD_P) AS ?tDep)
@@ -186,22 +186,26 @@ SELECT ?src ?tgt ?yr ?sDep ?tDep ?risk WHERE {
 ==============================================================================
 References
 ==============================================================================
-Aisen, A., & Veiga, F. J. (2011). How does political instability affect
-    economic growth? IMF Working Paper WP/11/12. International Monetary Fund.
+Ahuja, A., Wiseman, K., & Syed, M. (2017). Assessing country risk: Selected
+    approaches (IMF Technical Notes and Manuals No. 17/08). International
+    Monetary Fund. https://doi.org/10.5089/9781484302569.005
 
-Basu, T. G. (2001). What drives contagion: Trade, neighborhood, or financial
-    links? IMF Working Paper WP/01/29. International Monetary Fund.
+Aisen, A., & Veiga, F. J. (2013). How does political instability affect
+    economic growth? European Journal of Political Economy, 29, 151-167.
+    https://doi.org/10.1016/j.ejpoleco.2012.11.001
 
-International Monetary Fund. (2017). Assessing country risk: Selected
-    approaches. Technical note. Washington, DC: IMF.
+Hernández, L. F., & Valdés, R. O. (2001). What drives contagion: Trade,
+    neighborhood, or financial links? International Review of Financial
+    Analysis, 10(3), 203-218. https://doi.org/10.1016/S1057-5219(01)00052-7
 
 Kalesnik, V., & Polychronopoulos, A. (2020). Value in recessions and
-    recoveries. Technical report. Research Affiliates.
+    recoveries. Research Affiliates.
+
+Remolona, E. M., Scatigna, M., & Wu, E. (2008). The dynamic pricing of
+    sovereign risk in emerging markets: Fundamentals and risk aversion.
+    The Journal of Fixed Income, 17(4), 57-71.
+    https://doi.org/10.3905/jfi.2008.705542
 
 Van Rijckeghem, C., & Weder, B. (2003). Spillovers through banking centers:
     A panel data analysis of bank flows. Journal of International Money and
-    Finance, 22(4), 483-509.
-
-Wu, T. (2008). The dynamic pricing of sovereign risk in emerging markets:
-    Fundamentals and sentiment. Journal of International Money and Finance,
-    27(7), 1171-1188.
+    Finance, 22(4), 483-509. https://doi.org/10.1016/S0261-5606(03)00017-2
